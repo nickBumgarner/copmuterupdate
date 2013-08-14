@@ -1,0 +1,3218 @@
+TERMINAL NOTES
+
+pbcopy < ~/.ssh/id_rsa.pub
+
+
+// Site presales, environment local
+$aliases['local'] = array(
+  'parent' => '@parent',
+  'site' => 'formsvzwtechnologiescom1',
+  'env' => 'local',
+  'uri' => 'nick.formsvzwtechnologies.com:8082',
+  'root' => '/Users/nickBumgarner/Sites/formsvzwtechnologiescom/docroot',
+  'path-aliases' => array(
+    '%dump-dir' => '/tmp',
+    '%files' => 'sites/default/files'
+  ),
+);
+
+RSYNC
+
+drush @site.local uli
+
+drush sql-sync @formsvzwtechnologiescom1.prod @formsvzwtechnologiescom1.local --no-cache --sanitize
+drush rsync @formsvzwtechnologiescom1.prod:%files/ @formsvzwtechnologiescom1.local:%files
+
+drush sql-sync @inclind4.prod @inclind4.local --no-cache --sanitize
+drush rsync @inclind4.prod:%files/ @inclind4.local:%files
+
+drush sql-sync @dogfish.test @dogfish.local --no-cache --sanitize
+drush rsync @dogfish.test:%files/ @dogfish.local:%files
+
+drush sql-sync @leweschamber.prod @leweschamber.local --no-cache --sanitize
+drush rsync @leweschamber.prod:%files/ @leweschamber.local:%files
+
+drush sql-sync @leweschamber.test @leweschamber.local --no-cache --sanitize
+drush rsync @leweschamber.test:%files/ @leweschamber.local:%files
+
+drush sql-sync @georgetownco.prod @georgetownco.local --no-cache --sanitize
+drush rsync @georgetownco.prod:%files/ @georgetownco.local:%files
+
+drush sql-sync @ustravvoice.prod @ustravvoice.local --no-cache --sanitize
+drush rsync @ustravvoice.prod:%files/ @ustravvoice.local:%files
+
+drush sql-sync @millsboro.prod @millsboro.local --no-cache --sanitize
+drush rsync @millsboro.prod:%files/ @millsboro.local:%files
+
+drush sql-sync @beebemed.prod @beebemed.local --no-cache --sanitize
+drush rsync @beebemed.prod:%files/ @beebemed.local:%files
+
+drush sql-sync @visitreho.prod @visitreho.local --no-cache --sanitize
+drush rsync @visitreho.prod:%files/ @visitreho.local:%files
+
+drush sql-sync @beebemed.prod @beebemed.local --no-cache --sanitize
+drush rsync @beebemed.prod:%files/ @beebemed.local:%files
+
+drush sql-sync @muncie.prod @muncie.local --no-cache --sanitize
+drush rsync @muncie.prod:%files/ @muncie.local:%files
+
+
+
+/********************************************************************************************
+
+
+
+Configuration Changes Dogfish SITE
+
+Modules
+Install TVI Module
+Install Term Fields Module
+
+Add image field to blog content type [525px X 375px]
+Add image into the panel content display [ /admin/build/pages/nojs/operation/node_view/handlers/node_view_panel_context_12/content ]
+Created contributor content field
+Created contributed image field [140px X 140px]
+
+Create image style for blog content image [/admin/build/imagecache scale / crop 525px X 375px ]
+Create image style for blog contributor image [/admin/build/imagecache scale / crop 140px sq.]
+
+
+CONTEXT
+Removed blog content types from receiving the Social Sharing context. [ /admin/build/context/list/social-links/edit ]
+
+
+EDIT TEMPLATES
+
+Add this into the head of page.tpl file [
+
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "62a2eb5b-b97f-4066-9b76-11339ebf1716", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+
+
+ ]
+
+
+
+EDIT BLOG TEASER VIEW
+	***WHEN EDITING - YOU NEED TO ADJUST THE BLOG POSTS VIEW
+ [ /admin/build/views/edit/newest_blog ]
+
+Remove user references from display
+Add blog content image field in
+Add global link to display "MORE"
+Add custom text with share this code in it  [
+
+<span class='st_facebook_hcount' displayText='Facebook'></span>
+<span class='st_twitter_hcount' displayText='Tweet'></span>
+<span class='st_pinterest_hcount' displayText='Pinterest'></span>
+
+]
+
+REMOVE RECENT POSTS FROM /COMMUNITY/BLOGFISH AS WELL AS THE OUR BLOGFISH CREW BLOCK
+
+Disable the "View: blowfish_dev-Content pane" in the middle column here : /admin/build/pages/nojs/operation/node_view/handlers/node_view_panel_context/content
+
+Disable the block titled "Blogfish_Crew_Carousel_Block"
+[ /admin/build/block ]
+
+CREATE FEATURED STORY BLOCK FOR SIDEBAR
+
+Cloned the blog teaser displays and added a filter using the "Sticky" feature of the publishing option found on nodes.
+
+Create a new image style for this sidebar feature story image [ 185 x 130 ]
+
+
+DUPLICATE BLOG TEASER VIEW FOR BLOG CATEGORIES DISPLAY
+
+Install TVI module.
+
+Edit the Blog Categories Taxonomy.
+
+Enable custom breadcrumbs taxonomy module
+
+Enable taxonomy term view
+
+Clone view and create custom taxonomy term view
+
+Set TVI to use this model
+
+Set a filter so the view only applies to the Vocabulary = Blog Categories
+
+Under "Basic Settings" change the Row style to use fields
+
+Copy fields from blog view
+
+If necessary, configure context so that the community.css file is applied to those pages.
+
+
+BREADCRUMBS ARE GONE ON BLOG CATEGORY PAGES
+
+
+NEED TO DETERMINE NEW URL PATH FOR BLOG CATEGORY PAGES
+
+http://dogfishstg.prod.acquia-sites.com/admin/build/path/pathauto
+
+[Edit / update aliases http://dogfishstg.prod.acquia-sites.com/admin/build/path/list/blog-categories ]
+
+NO PAGE TITLES ON BLOG CATEGORY PAGES
+
+
+
+BLOG ARTICLE FORMATTING
+
+First, create a custom time format. http://dogfishstg.prod.acquia-sites.com/admin/settings/date-time/formats m.d.Y
+
+Apply patch that will allow for a custom time format to be applied to date field [#18 https://drupal.org/node/776268 ]
+
+
+FAQ CHANGES
+
+Add FAQ content image to the ImageCache module -- 75px sq
+Add FAQ category image to ImageCache -- 145px sq
+Create FAQ view content pane
+Create FAQ panel for FAQ page
+Create basic FAQ page for panel to reside on / in
+Duplicate blog category views for FAQ category pages
+
+
+********CHECK ALL FIELDS / FILES FOR PERMISSIONS -- ESPECIALLY IMAGES
+
+
+
+/********************************************************************************************
+INITIATE LOCAL SOLR SEARCHINGS
+
+startsolr
+drush -l websiteurl sapi-c 2
+drush -l websiteurl sapi-i 2 200
+http://imgur.com/a/n8w2i
+
+/********************************************************************************************
+
+5TH ANNUAL DGT
+http://www.dgcoursereview.com/course.php?id=52
+http://www.dgcoursereview.com/course.php?id=5651
+http://www.dgcoursereview.com/course.php?id=3950
+http://www.dgcoursereview.com/course.php?id=4993
+http://www.dgcoursereview.com/course.php?id=5635
+
+
+/********************************************************************************************
+
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --allow-file-access-from-files
+
+/********************************************************************************************
+
+
+MarketStreet Distribution:
+Action Research Project
+
+
+
+
+
+Nicholas Bumgarner
+June 6th, 2013
+IST 8100
+
+
+
+
+
+
+
+
+
+Defining Testing Criteria
+Prior to commencing the action research project, the first iteration has already taken place. The basic plan for the first iteration was to hold a meeting with a programmer, the project manager, and owner of Inclind, Inc. to define a list of testing criteria. An unexpected meeting between between myself and the project manager took place first thing on May 29th, 2013. The project manager and I sat down and defined all of the major pieces of the system to be tested, including various content types and features found in MarketStreet, the various types of users which will be using the system, and a list of browsers and devices which the system must be tested against.
+After the meeting, we had created an actionable list of testing criteria which we will follow to test the system in the new first real iteration of the research project. It was decided that the project manager and I will be the ones testing the system, and any bugs which we find we are going to document thoroughly in a document we created. After we test and document any issues or bugs in the system, we will then have an actionable list to deliver to the programmers and front end developers to initiative the fixing stage of the project.
+
+Iteration One: The Testing Phase
+Iteration Plan
+To get the ball rolling on the MarketStreet action research project, the project manager and I will begin testing the system. Since we have a defined set of criteria, we will both already have a list to reference. The best way to go about testing the system will be to divide various parts of the system, browsers, users types and devices among the two of us.
+Not only will we need to test the entire system in a multitude of browsers and devices, but there are essentially two parts of the system which we will need to test. The obvious part of testing will be for the everyday end user of the system, which are those who are visiting the websites being built MarketStreet, the front end of the system. When we test the front end of the system, we will need to look at how content is displayed and organized for the entire site. We will look to make sure all the content on the site is displayed properly and as anticipated.
+The MarketStreet distribution features a responsive framework, so we will also have to check every part of the site on a desktop, on a mobile phone device, and tablet devices. All of this will need to be tested on both Macintosh and Microsoft operating systems, as well as Apple and Android devices. Inclind, Inc. tests for a specified list of internet browsers which are the most commonly used ones. We previously specified that we will be testing the system in Firefox, Safari, Google Chrome, and Internet Explorer versions 8 & 9. These browsers must be tested on both Macs and Windows computers.
+We have decided that the best way to test the system will be to use it the same way as everybody else will. We will both create a fresh local installation of the MarketStreet system to use. This way we can note any issues or problems in the installation process, and truly start from the beginning. The installation will have some basic content associated with it when we install it, but part of the testing process will include testing the back end of the system.
+Only a fraction of the people using the MarketStreet application will be actual administrators, so we have decided to focus the testing of the back end of the system purely on functionality. We will not be testing the back end of MarketStreet for any aesthetics at all. In order to properly test the front end of the site, we will create content in the back end of the site just as administrators will, allowing us to thoroughly test both areas of the site at the same time.
+Testing the back end of the system will mean inserting various forms of content which will simulate how the site will actually be used. The various content types found within MarketStreet includes basic pages, events, classifieds, organizations, members, products, content products, simple ads and blog articles. As part of our testing, we will need to demonstrate that we can access, create and edit all of the above listed content types and features. MarketStreet is configured in a way to take a single piece of content and display it in many different places dynamically, and we will be testing to make sure each content type displays correctly in every instance that it exists.
+Finally, we will have to test the site like a potential member will. MarketStreet is a system which allows for membership signups, and those members can contribute their own content to the site. The project manager and myself will both be testing the process of signing up for membership and go through the process of approval. Once we create fake approved members in our systems, we will test the capabilities that the user should have, such as purchasing content space, buying advertisements and editing business and profile information.
+From here we will begin the testing process. I will begin by testing the system as an anonymous user, somebody who is just visiting the site. The project manager is going to begin by testing the site through the role of a member. I will be testing mostly on a Windows computer, and the project manager will begin by testing on a Mac. We have a Google Doc setup that we will both be using to record bugs which we find. We will pick up whatever testing task is left depending on what is available.
+
+Iteration Action
+The project manager and I both conducted testing as previously described. We began the process both by installing a fresh copy of the MarketStreet application and began by creating content. Testing in different operating systems, we went through our list of testing criteria. We tested thoroughly for the majority of a day.
+As we found various problems or issues, we would take screenshots when applicable, and upload them to the testing documentation. In many instances, the bugs which were found were simple styling errors which will require minor code revision to fix. The screenshots that were uploaded are provided as a reference point for the production team for when they go to fix the bugs.
+The project manager and I spoke with one another in regards to unknown variables about the project. There were several instances where we tested things without have a clear idea of what was expected of the system. The differences we found in the system which we were not sure of we notated in our testing document and highlighted as questions which we will need to speak to either a programmer or the owner of Inclind, Inc. about.
+We tested the MarketStreet application on both Windows and Apple computers, covering most of the functionality that we had previously discussed. In all of the major browsers and devices we successfully tested the basic pages, event nodes, blog articles, organization feature, membership sign up process and content editing capabilities of all of these in the back end of the system.
+After roughly 6 hours of testing and an extensive list of bugs found, the project manager called me into an unexpected meeting. During this meeting, we combed through the produced documentation and discussed all the bugs. Together we refined the document, clarifying bugs which were listed and removing duplicates. We organized the bugs into various types.The actual bugs which we found we highlighted with red text color, and any other functionality issues which required more discussion or clarification from a third party we colored green.
+
+Iteration Observations
+The first and most obvious observation to note is that the MarketStreet application has far more bugs in it than we previously imagined. We both filled up the testing documentation pages much quicker that we expected, and the testing process was moving much slower than we anticipated. We had hoped to finish testing the entire system within a single day, and at this point we are probably not even halfway done.
+We found that many parts of the system did not function in a way that had made any sense at all. For example, a person who becomes a member does not have the capability of adding information about his/her organization. We found that this is a poor experience for the user and does not encourage content creation. A person who has just become a member should be allowed to create and update information regarding their businesses.
+Another part of the system which we found to behave differently than expected was the membership process. When somebody registers to become a member, they must wait for a site administrator to manually approve their membership. This is extremely anti-climactic to a recently registered member.
+Once membership is approved for somebody, we observed that the confirmation email that is sent to that person contains a link to reset their password. As I was testing this and had never previously seen it before, it appeared as a link which one must click to confirm their membership application process, which is common among websites.
+As the project manager and I tested the system, we come up with various questions for one another, not knowing what was expected of the system. For example, neither of us knew if a member could or should be able to manage more than one organization. It would seem as though it should be possible, but was never discussed.
+While testing the site there were also differences of opinion. There were things which I thought could use improvement that the project manager insisted was of an acceptable or comparable level. The main reason for this was a lack of clarification on the level of detail the MarketStreet application was expected to achieve in the first place.
+After reviewing the testing documentation, we have a decent sized list of both questions and bugs (Appendix A). The project manager has requested that a review and code sprint be done before finishing the testing. The review will include several members of the staff and will hopefully allow the remaining testing to be done more smoothly.
+
+Iteration Reflections
+After the first iteration in this action research project, there are quite a lot things I have realized could use improvement in our processes. The testing process had too many unknown variables which slowed us down, and there was far more testing than two people should have taken on by themselves; at least in the expected time frame. It is likely that a little bit more time in preparation could have saved us a lot of time later on down the road.
+Although not a direct part of this iteration, it would have been beneficial to have more control over the initial meeting. By not conversing with the project manager prior to the meeting, we did not have all of the people readily available who may have been able to provide valuable insight to the upcoming testing phase.
+The testing seemed daunting especially once we had started. I feel as though it would have been beneficial for us to break down the testing process into even smaller pieces. Instead of trying to test the entire system in a single day, it would have been better to take the testing on one piece at a time. I believe this would allow us to concentrate on the testing criteria in more detail. Also, by having a few people focuses on smaller portions of the work, those tasks would seem more accomplishable, and may have resulted in better results. It would also make things easier to do this way because if there was any questions regarding the expected functionality of the feature being tested, everybody involved would already know what was actually being discussed.
+We tended to stay focused on separate parts of the system while testing, and whenever questions came up, the other person usually didn’t have a good understanding about what the question was. This required additional explanation and cost us time during the testing process. One way this could be avoided was to readily have a computer available to show the person, or to speak to somebody who was already familiar with the topic.
+Finally it seemed as though the process of organizing all the found bugs took a long time. We had to filter through all of our notes which were separated by sections and make sure we did not record the same issues. There weren’t very many duplicated issues, but we wouldn’t have known if we didn’t discuss all the issue with one another. Since those bugs will later be converted into actionable items in our project management system, it probably wasn’t completely necessary for us to go through this process. The project manager could have easily weeded out the duplicates. As far as notes which aren't clear enough for others to understand, we should make an effort to make the issues clear enough that nobody will require a custom explanation.
+Due to the unforeseen premature completion of the iteration, the project’s projected schedule has been altered. The additional iterations which will now be part of the project have been added to the project. Those changes are reflected in the diagram presented in Figure 4.-1 The additional iterations which have been inserted into the project can be viewed in red.
+
+
+Iteration Two: First Code Sprint
+Iteration Plan
+At this point in the project, we have thoroughly tested about half of the MarketStreet system. Due to an unexpected large amount of bugs found in the system early, and to a lack of understanding all the expectations of the system’s functionality, we have decided to stop and review our progress.
+The plan is to hold another meeting to discuss where the system stands, the next move in the project and to answer some questions we still have. The meeting should include myself, the project manager, at least one programmer and the owner of Inclind, Inc. This will be important since the owner will be able to explain what the system should or shouldn’t be able to do, and the programmers will be able to explain what is possible or not. The meeting will likely take place during the company’s morning meeting, and should be fairly brief.
+It is expected that during the meeting, I will be assigned a number of tasks leftover from the previous round of testing. Since we already have at least fifty bugs that can be fixed, it is expected that I will be put to task to iron those kinks before testing the system further.The bugs which we already know we can fix and are simple aesthetic fixes I will be taking on over the course of a day to a day and a half.
+Many of the bugs which I will be fixing will be related to various browsers, devices and operating systems. The changes will all be made locally on the MarketStreet project which was installed during the testing process. Once the changes have all been made and verified, they will be pushed to the repository which Inclind keeps.
+After all the fixes have been implemented, it is expected that the project manager will complete a round of quality assurance. Each bug that is listed and marked as complete will be reviewed to ensure that i has been fixed. Any bugs which is found by the project manager that has not been thoroughly addressed will come back to me for a final revision.
+This will be the final step in this iteration. We will begin with a meeting and there should be assignments to fix the bugs. It is possible that there will be functionality bugs which a programmer will be assigned to fix, but it is more likely that all the functionality and programmatic bugs will all be handled at once, sometime down the road.	After all the initial bugs are fixed, we will then meet again to discuss the final round of testing and we can decide where to go from that point.
+
+Iteration Action
+There was a meeting held in which the project manager and myself voiced some of the concerns and questions regarding the MarketStreet system among other developers and programmers. The discussions covered a variety of topics which included determining the expected functionality of the system, discussion methods for fixing or adjusting various pieces of the system and general concerns about the system itself.
+The resources and schedule that Inclind had during the time of this iteration forced the action to deviate from the original plan. It was expected that the main repository would have been updated and fixed after discussing the various bugs which were found, but we were put into a position where we actually had to start creating websites which had already been sold and were expected to use this MarketStreet distribution. The clients who had previously been sold to have their sites build on this system had already been waiting awhile for us to complete the distribution, and were eager to get their sites built.
+Prior to being able to update the MarketStreet repository, we began developing two websites using the incomplete system. The idea was to at least get the sites started and built to a point to demonstrate to the clients to show that we were indeed working on something. The aesthetics of the site were accomplished quickly, and the clients were relatively pleased with the progress. During this time, the entire development team was constantly testing and fixing bugs which existed in both of these sites.
+What would happen is anytime a functionality issue or adjustment was made, it was duplicated across both sites. After a couple of weeks of testing and fixing these two websites, it was necessary to begin building another couple of sites which required MarketStreet’s distribution. Since the first site that we built using the system had the majority of kinks ironed out of it, we used that first site as a baseline for the other website projects which were under way. In all, a total of five websites had been built using an incomplete version of MarketStreet.
+As it is customary for Inclind to thoroughly test all websites, it was inevitable that we would catch even more bugs which had slipped past us on previous sites. For about a week, there was constant testing and development on not one single distribution repository, but five versions of the same code. This means if we found a bug in a single site, we would have to replicate those issues across all five websites. There was just a final round of testing and bug fixes, and after that Inclind has satisfied enough of its clients to set that work aside and get back to fixing the main repository.
+
+Iteration Observations
+During this iteration, a total of five websites were built using the MarketStreet distribution as it were after our initial testing sprint. Inclind is a company who must serve their clients, and our schedule does not allow us to only work on the MarketStreet distribution. In order to keep up with client demands, we had to begin implementing sites using a halfway tested, and not even debugged system.
+A primary observation from this sprint is that the more we built these sites out the more we had realized how many bugs existed in the MarketStreet system. We had done an initial round of testing, but the testing was not thorough enough to find even major flaws that existed in the distribution. These were found by both internal testing of the sites that were being built as well as feedback from clients including their expectations and concerns.
+During this time we were debugging and fixing basically the same code base which was replicated across several sites that were being built. While it would seem fairly straightforward to fix one site and replicate the changes, we found there were complications in this process. For example, code changes which were implemented and duplicated across all sites did not always completely resolve the known issues because configuration changes were also necessary to alleviate the problems.
+During the changes of the site, it was not always the case that each developer was available to work on these MarketStreet projects. In some cases, developers with less understanding of the system were charged with fixing parts of the distribution which they didn’t fully understand. In some instances, it was found that a lack of information or understanding caused inefficiencies in the development work. Often times, somebody would have to be interrupted and brought into the project so they could explain how to fix a specific issue.
+As tickets were created and bugs were corrected in the system, it was imperative for the changes and corrections to be implemented. This would ensure that if somebody else was needed to correct the same problem on a different site, the transfer of knowledge would be available to that person. The idea was that if the solution was well documented, it could easily be implemented by another person who had not previously worked on that issue.
+During this code sprint, it was necessary to have developers verify the completed work of other developers. In a single day, it was common to have an upwards of fifty tickets completed and awaiting verification. It was too much for the project manager to do on his own, and so we would take the time to put each ticket through a quality assurance inspection. This was fairly successful, however after working on the same issues for a long period of time made it easy for unsatisfactory tickets to make their way through undetected. In many instances, a small oversight would allow this to happen.
+Iteration Reflections
+This entire iteration went completely awry. The entire point of testing and fixing the MarketStreet distribution thoroughly was to prevent having to fix bugs across multiple distributions. The fact of the matter is that we simply did not have the time to spend on this system. Even after the initial testing initiative, Inclind was simply too busy to work on this internal project. The work being done brought the company to a point with MarketStreet clients where we had to show them something.
+It wasn’t that we didn’t want to work on the distribution, but we couldn’t justify delaying projects for an extra week or two to work on a project which we wouldn’t be immediately compensated for. I also believe that the MarketStreet bugs were originally perceived as being relatively minor. The list of bugs which were found were only a fraction of the issues which we actually addressed during the development of the five MarketStreet sites which we had to being.
+At this point Inclind is caught up enough to actually put the time in to fix all the known issues in the system.
+Iteration Three: Update MarketStreet Distribution
+Iteration Plan
+Inclind is currently in a position where we can afford to spend a few days working on the MarketStreet distribution. The plan is to hold a company wide meeting to discuss a plan and organize the work which needs to be done to the distribution. During this meeting, all known issues will be mentioned, and the work can be divided up among the developers. It will be important that the appropriate tasks are assigned to the appropriate people.
+The previous code sprint on the MarketStreet sites were mostly regarding functionality issues with the actual system. Many of the issues were related to the CRM and Memberships system of MarketStreet. The MarketStreet distribution has not thoroughly been tested for aesthetics across the various browsers and devices. Part of this iteration will include a thorough aesthetics test to ensure the distribution is responding to all the browsers and devices as it should.
+Once the MarketStreet sprint has been discussed, a list of tasks will be assigned to everybody within the company. The code sprint will be accomplished by every member in the production staff, and it is expected to be completed within a couple of days. Since the majority of the bugs have been fixed numerous times across the previously developed sites, this effort should hopefully be a quick one.
+As the development team updates code and tickets, the distribution will be updated. All code will be updated using the code versioning that Inclind adheres to. This will prevent issues when multiple people update the same code, and will help ensure nobody’s changes are overwritten.
+Either during the code sprint or after, all of the tickets will have to be tested and verified for completion. It will be decided during the meeting who will be part of the QA process, and when it is expected to be finished. Once this round of testing and debugging is finished, it is expected that more MarketStreet projects will be initiated.
+
+
+
+
+
+
+
+
+
+
+APPENDIX A
+
+MarketStreet Distribution Testing Initiative
+
+Each individual testing task should be completed in
+Safari, Chrome, Internet Explorer 8 & 9, Firefox, Android Mobile & Tablet, Apple iOS & Tablet
+
+Blue - Non issue
+Red - Issue
+Green - Possible issue / Needs discussion
+
+Testing an Anonymous Role
+
+Sign up for membership
+Note the user experience of signing up including success messages
+Note any success emails received when signing up
+Should be able to view any published organization
+View blogs on all browsers and devices
+View events on all browsers and devices
+View basic pages on all browsers and devices
+View classifieds on all browsers and devices
+Should be able to fill out basic contact form and receive confirmation
+Should be able to view and use the calendar of events pages
+Viewing the site on a mobile device should not degrade the experience
+
+Testing an Anonymous Role with Commerce Enabled
+
+Anonymous users should not have access to view a content product
+Anonymous users should not be able to see any renewal product
+Anonymous users should be able to see membership products
+Anonymous users should be able to see physical products
+Anonymous users should be able to see event products [renewal information?]
+
+Testing a Member Role
+
+A member should be able to edit profile information
+(Should) A member be able to add content with commerce disabled?
+A member should be able to edit and/or add content for multiple organizations
+
+Testing a Member Role With Commerce
+
+A member should be able to purchase and create any purchasable content available
+A member should be able to edit purchased content [submitted for review]
+What happens if a membership is near expiration?
+
+
+Testing Admin Role
+
+Organizations
+
+Blue - Non issue
+Red - Issue
+Green - Possible issue / Needs discussion
+
+1. I should be able to add organizations
+a. Successfully added a new organization
+b. Edit screen needs organization
+c. Could not mark an organization as featured (didn’t see an option)
+d. Couldn’t see any information about anniversary date (Maybe not needed when organizations are not created through the store, need to discuss)
+e.
+2. I should be able to edit organizations once they are added
+a. Can edit an organization successfully.
+3. I should be able to manually archive or unarchive organizations
+a. There is currently no way to complete this
+b. What is the logic that makes a organization archived?
+4. I should be able to add contacts
+a. Successfully could add a contact
+5. I should be able to connect contacts to organizations
+a. Successfully connected a new contact to a drupal user
+b. Successfully connected a contact to an organization
+6. I should be able to edit contacts
+a. Could successfully edit a contact
+7. I should be able to download reports for contact and organizations
+a. Successfully downloaded contact report to csv (as admin)
+b. Successfully downloaded Organization report to csv (as Admin)
+
+Revisioning
+
+As an admin I should be able to easily see which content is pending revision approval from the dashboard
+There should be a clear UX to a member after submitting content for approval that it must be approved by an Admin before the content will post to the website.
+As an admin I should be able to see all revisions made to a node and approve each individual revision.
+I should see the dates of the revision
+
+Organization Bug Notes:
+1. Cannot mark an organization as featured by default  as a Admin. I could do this as USER1
+2. Layout of the Organization edit screen needs work (vertical tabs not ordered correctly)
+3. Can only install example content as User 1, is this acceptable??
+4. Errors after creating first organization as an admin http://awesomescreenshot.com/0771c0we9a
+5. Created an organization, did a search, this was what appeared http://awesomescreenshot.com/0781c0xbd5   This should be a grid display. Also, this isn’t the proper layout. This was as an anonymous user. Not sure what happened to the Organization layout. DUPLICATE
+6. Styling issue with the sidebar menu block http://awesomescreenshot.com/0781c13fd8
+7. When editing/ adding an organization I cannot override the file upload with a name. just a config change to allow a description by default on that field.  There should also be a MAX upload size by default of like 2MB
+
+
+Noted Errors / Bugs
+
+Bugs / Notes
+
+Anonymous User should not see “edit this page by clicking the edit tab,” default content on homepage. Plus this links to a page the user can not access. Default home page for anonymous users should either be or link to the user sign up page.
+After registering to be a member, there is a success message. The e-mail that is sent is somewhat misleading. It provides the user with a one-time login / password reset link, which is not really necessary. The rest of the e-mail looks good.
+Not sure if possible or not, but would be nice to include the site logo in the success e-mail.
+An registered member should be able to add an organization to the site. It may need approval, but this seems like a basic functionality that should exist. There needs to be a defined UX for setting up organizations when the store isn’t enabled. This could allow for automatic user/organization association as well, if possible, to reduce the manual process.
+As an anonymous user the business directory landing page should probably show some listings, possibly all listings with pager, and keep the business directory filtering block on top? Should be some  UX text explaining to start  searching or show some randow organizations.
+When viewing businesses starting with a letter, it seems like there is almost too much information being displayed. Should be more like a teaser list so people can quickly navigate through all the business listings. Basically  the full node is showing on a search not the grid teaser.
+Need to figure out why organizations go inactive after a few hours
+Need a way for admins to manually make orgnaizations active or inactive
+Organizations show only be in active if 1. The admin manually does it or 2. The renewal dates passes without the member renewing their subscription.
+Business teasers should not have the State: Active showing at all. This field should be hidden from all displays.Related to Biz Directory Grid Teaser View on search
+On the business node page, the logo needs to be reworked so it isn’t cropped off goofily. It needs to be scaled to fit, but not cropped.
+Seeing errors on the organization page.
+Breadcrumbs should show Home / Business Directory / Business Name (currently shows Home/ Business Name)
+On business node page, the phone number should not have a hover state [you can’t click it on desktop]
+When viewing the business directory page as anonymous user, I should not see an error message. Errors should be turned off for all non admins
+As an anonymous user, I should be able to view the business directory on mobile without the footer breaking. Styling issue, There is a screenshot for this issue.
+Error messages should have text-wrapping to prevent pages from breaking.
+The submit button on the mobile business directory search block should be at the bottom of the form so it is obvious that it controls all of the filters. Currently it only looks like it controls the search input box itself, when it really controls the input field and select boxes.
+When adding blog content, the category should not be required if there is not at least one default category included. Makes me upset when I have to go back and add a category and lose all the content I’ve already uploaded!
+When creating an event node, the category should either not be required, or should contain a default category to choose from. Don’t let me add in 90% of the content before telling me I am required to choose a non-existing field! Reference #16 same issue
+Blog / Classifieds / Events categories page (grid view) grid block’s aren’t clickable, only the titles are.
+Weird spacing on blog body content on iPad displays.  There is a screenshot for this issue
+Shopping cart says it is empty when it isn’t.  Then you go add another product, go back to the cart and all of the previous items are there again.
+Do not give me the option of adding an event registration to my cart if there aren’t any tickets/seats left. Should be a notification that the event is sold out if at capacity
+When managing registration settings, kevin’s e-mail address shouldn’t be the default “From Address”
+Looking at the event grid, doesn’t make sense how the fields display and say “Registration”. Basically the Grid view of events need to be adjusted about which information is being displayed. Also should this even be a grid view or a list view, the blogs are a list which usally follow the same layout as events
+iOS - basic page image has too much space around it.There is a screenshot . This is a minor issue.
+iOS - Event calendar  See screenshot
+When clicking events, blogs or classifieds, the user is only presented with either search options or a calendar. Seems like we should have some kind of list available for people to view information without searching...?Need to further discuss the UX of these displays.
+Classified grid view - grid items have too much margin. Another minor styling issue
+Classified grd view should not display social icons.
+Sent an e-mail via contact form but never received it.   Since we are enabling the contact form by default, the site admin needs  to be in the email settings or there should be a warning to configure the contact webform further.
+After filling out contact form, I shouldn’t get a link to go back to the contact form.. if the form went through I’m probably done with it. Link back to homepage? (ideally it would auto return to home page with success message)This relates the the previous issue
+Would be nice if site search results returned the content type for each result. IMprove search results UX
+When viewing content products, the breadcrumbs should include a link to the product category. There are a few places in the site there the breadcrumbs need work.
+Errors on install of Distro http://awesomescreenshot.com/0491c0nle6
+Error when adding new user http://awesomescreenshot.com/0cc1c0o588
+Dashboard should produce every time an admin logs in
+Can’t Access “Manage Organizations” or “Manage Contacts” by default as an Admin.
+Errors when going to “Manage Organizations” as Admin role. http://awesomescreenshot.com/0ce1c0ut87
+Errors when clicking “Add Organization” as admin role. http://awesomescreenshot.com/0de1c0v2d8
+Admin - Appearance section should show MarketStreet logo, not Zurb Foundation logo.
+Basic page vertical tabs: “page information” just has tags in it, should just go under the main category.
+Calendar Month display needs some adjustment
+Tags displays in a grid but the grid heights vary causing the layout to break. Either have a set height or not be in a grid display.
+. Membership products don’t show when store is enabled.  Only the content category
+When clicking the content category in the store, the layout is no longer a grid but a list view.
+The “My content” and “My organizations” blocks needs to be assigned to /user by default.
+The “my Organization” block needs to have a function to edit their own organization. As a member logged in I was unable to edit my own organization listing.
+
+
+
+
+/********************************************************************************************
+<?php
+
+/**
+ * @file
+ * Drupal site-specific configuration file.
+ *
+ * IMPORTANT NOTE:
+ * This file may have been set to read-only by the Drupal installation
+ * program. If you make changes to this file, be sure to protect it again
+ * after making your modifications. Failure to remove write permissions
+ * to this file is a security risk.
+ *
+ * The configuration file to be loaded is based upon the rules below.
+ *
+ * The configuration directory will be discovered by stripping the
+ * website's hostname from left to right and pathname from right to
+ * left. The first configuration file found will be used and any
+ * others will be ignored. If no other configuration file is found
+ * then the default configuration file at 'sites/default' will be used.
+ *
+ * For example, for a fictitious site installed at
+ * http://www.drupal.org/mysite/test/, the 'settings.php'
+ * is searched in the following directories:
+ *
+ * - sites/www.drupal.org.mysite.test
+ * - sites/drupal.org.mysite.test
+ * - sites/org.mysite.test
+ *
+ * - sites/www.drupal.org.mysite
+ * - sites/drupal.org.mysite
+ * - sites/org.mysite
+ *
+ * - sites/www.drupal.org
+ * - sites/drupal.org
+ * - sites/org
+ *
+ * - sites/default
+ *
+ * If you are installing on a non-standard port number, prefix the
+ * hostname with that number. For example,
+ * http://www.drupal.org:8080/mysite/test/ could be loaded from
+ * sites/8080.www.drupal.org.mysite.test/.
+ */
+
+/**
+ * Database settings:
+ *
+ * The $databases array specifies the database connection or
+ * connections that Drupal may use.  Drupal is able to connect
+ * to multiple databases, including multiple types of databases,
+ * during the same request.
+ *
+ * Each database connection is specified as an array of settings,
+ * similar to the following:
+ * @code
+ * array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'port' => 3306,
+ *   'prefix' => 'myprefix_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * The "driver" property indicates what Drupal database driver the
+ * connection should use.  This is usually the same as the name of the
+ * database type, such as mysql or sqlite, but not always.  The other
+ * properties will vary depending on the driver.  For SQLite, you must
+ * specify a database file name in a directory that is writable by the
+ * webserver.  For most other drivers, you must specify a
+ * username, password, host, and database name.
+ *
+ * Some database engines support transactions.  In order to enable
+ * transaction support for a given database, set the 'transactions' key
+ * to TRUE.  To disable it, set it to FALSE.  Note that the default value
+ * varies by driver.  For MySQL, the default is FALSE since MyISAM tables
+ * do not support transactions.
+ *
+ * For each database, you may optionally specify multiple "target" databases.
+ * A target database allows Drupal to try to send certain queries to a
+ * different database if it can but fall back to the default connection if not.
+ * That is useful for master/slave replication, as Drupal may try to connect
+ * to a slave server when appropriate and if one is not available will simply
+ * fall back to the single master server.
+ *
+ * The general format for the $databases array is as follows:
+ * @code
+ * $databases['default']['default'] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['extra']['default'] = $info_array;
+ * @endcode
+ *
+ * In the above example, $info_array is an array of settings described above.
+ * The first line sets a "default" database that has one master database
+ * (the second level default).  The second and third lines create an array
+ * of potential slave databases.  Drupal will select one at random for a given
+ * request as needed.  The fourth line creates a new database with a name of
+ * "extra".
+ *
+ * For a single database configuration, the following is sufficient:
+ * @code
+ * $databases['default']['default'] = array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'prefix' => 'main_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * You can optionally set prefixes for some or all database table names
+ * by using the 'prefix' setting. If a prefix is specified, the table
+ * name will be prepended with its value. Be sure to use valid database
+ * characters only, usually alphanumeric and underscore. If no prefixes
+ * are desired, leave it as an empty string ''.
+ *
+ * To have all database names prefixed, set 'prefix' as a string:
+ * @code
+ *   'prefix' => 'main_',
+ * @endcode
+ * To provide prefixes for specific tables, set 'prefix' as an array.
+ * The array's keys are the table names and the values are the prefixes.
+ * The 'default' element is mandatory and holds the prefix for any tables
+ * not specified elsewhere in the array. Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main_',
+ *     'users'     => 'shared_',
+ *     'sessions'  => 'shared_',
+ *     'role'      => 'shared_',
+ *     'authmap'   => 'shared_',
+ *   ),
+ * @endcode
+ * You can also use a reference to a schema/database as a prefix. This maybe
+ * useful if your Drupal installation exists in a schema that is not the default
+ * or you want to access several databases from the same code base at the same
+ * time.
+ * Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main.',
+ *     'users'     => 'shared.',
+ *     'sessions'  => 'shared.',
+ *     'role'      => 'shared.',
+ *     'authmap'   => 'shared.',
+ *   );
+ * @endcode
+ * NOTE: MySQL and SQLite's definition of a schema is a database.
+ *
+ * Advanced users can add or override initial commands to execute when
+ * connecting to the database server, as well as PDO connection settings. For
+ * example, to enable MySQL SELECT queries to exceed the max_join_size system
+ * variable, and to reduce the database connection timeout to 5 seconds:
+ *
+ * @code
+ * $databases['default']['default'] = array(
+ *   'init_commands' => array(
+ *     'big_selects' => 'SET SQL_BIG_SELECTS=1',
+ *   ),
+ *   'pdo' => array(
+ *     PDO::ATTR_TIMEOUT => 5,
+ *   ),
+ * );
+ * @endcode
+ *
+ * WARNING: These defaults are designed for database portability. Changing them
+ * may cause unexpected behavior, including potential data loss.
+ *
+ * @see DatabaseConnection_mysql::__construct
+ * @see DatabaseConnection_pgsql::__construct
+ * @see DatabaseConnection_sqlite::__construct
+ *
+ * Database configuration format:
+ * @code
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'mysql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'pgsql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'sqlite',
+ *     'database' => '/path/to/databasefilename',
+ *   );
+ * @endcode
+ */
+//$databases = array();
+
+/**
+ * Access control for update.php script.
+ *
+ * If you are updating your Drupal installation using the update.php script but
+ * are not logged in using either an account with the "Administer software
+ * updates" permission or the site maintenance account (the account that was
+ * created during installation), you will need to modify the access check
+ * statement below. Change the FALSE to a TRUE to disable the access check.
+ * After finishing the upgrade, be sure to open this file again and change the
+ * TRUE back to a FALSE!
+ */
+$update_free_access = FALSE;
+
+/**
+ * Salt for one-time login links and cancel links, form tokens, etc.
+ *
+ * This variable will be set to a random value by the installer. All one-time
+ * login links will be invalidated if the value is changed. Note that if your
+ * site is deployed on a cluster of web servers, you must ensure that this
+ * variable has the same value on each server. If this variable is empty, a hash
+ * of the serialized database credentials will be used as a fallback salt.
+ *
+ * For enhanced security, you may set this variable to a value using the
+ * contents of a file outside your docroot that is never saved together
+ * with any backups of your Drupal files and database.
+ *
+ * Example:
+ *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
+ *
+ */
+$drupal_hash_salt = '';
+
+/**
+ * Base URL (optional).
+ *
+ * If Drupal is generating incorrect URLs on your site, which could
+ * be in HTML headers (links to CSS and JS files) or visible links on pages
+ * (such as in menus), uncomment the Base URL statement below (remove the
+ * leading hash sign) and fill in the absolute URL to your Drupal installation.
+ *
+ * You might also want to force users to use a given domain.
+ * See the .htaccess file for more information.
+ *
+ * Examples:
+ *   $base_url = 'http://www.example.com';
+ *   $base_url = 'http://www.example.com:8888';
+ *   $base_url = 'http://www.example.com/drupal';
+ *   $base_url = 'https://www.example.com:8888/drupal';
+ *
+ * It is not allowed to have a trailing slash; Drupal will add it
+ * for you.
+ */
+# $base_url = 'http://www.example.com';  // NO trailing slash!
+
+/**
+ * PHP settings:
+ *
+ * To see what PHP settings are possible, including whether they can be set at
+ * runtime (by using ini_set()), read the PHP documentation:
+ * http://www.php.net/manual/en/ini.list.php
+ * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * runtime settings and the .htaccess file for non-runtime settings. Settings
+ * defined there should not be duplicated here so as to avoid conflict issues.
+ */
+
+/**
+ * Some distributions of Linux (most notably Debian) ship their PHP
+ * installations with garbage collection (gc) disabled. Since Drupal depends on
+ * PHP's garbage collection for clearing sessions, ensure that garbage
+ * collection occurs by using the most common settings.
+ */
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);
+
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/en/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
+
+/**
+ * Drupal automatically generates a unique session cookie name for each site
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains. Make sure to always start the $cookie_domain
+ * with a leading dot, as per RFC 2109.
+ */
+#$cookie_domain = '.wilgusassociates.com';
+
+/**
+ * Variable overrides:
+ *
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
+ */
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * Reverse Proxy Configuration:
+ *
+ * Reverse proxy servers are often used to enhance the performance
+ * of heavily visited sites and may also provide other site caching,
+ * security, or encryption benefits. In an environment where Drupal
+ * is behind a reverse proxy, the real IP address of the client should
+ * be determined such that the correct client IP address is available
+ * to Drupal's logging, statistics, and access management systems. In
+ * the most simple scenario, the proxy server will add an
+ * X-Forwarded-For header to the request that contains the client IP
+ * address. However, HTTP headers are vulnerable to spoofing, where a
+ * malicious client could bypass restrictions by setting the
+ * X-Forwarded-For header directly. Therefore, Drupal's proxy
+ * configuration requires the IP addresses of all remote proxies to be
+ * specified in $conf['reverse_proxy_addresses'] to work correctly.
+ *
+ * Enable this setting to get Drupal to determine the client IP from
+ * the X-Forwarded-For header (or $conf['reverse_proxy_header'] if set).
+ * If you are unsure about this setting, do not have a reverse proxy,
+ * or Drupal operates in a shared hosting environment, this setting
+ * should remain commented out.
+ *
+ * In order for this setting to be used you must specify every possible
+ * reverse proxy IP address in $conf['reverse_proxy_addresses'].
+ * If a complete list of reverse proxies is not available in your
+ * environment (for example, if you use a CDN) you may set the
+ * $_SERVER['REMOTE_ADDR'] variable directly in settings.php.
+ * Be aware, however, that it is likely that this would allow IP
+ * address spoofing unless more advanced precautions are taken.
+ */
+# $conf['reverse_proxy'] = TRUE;
+
+/**
+ * Specify every reverse proxy IP address in your environment.
+ * This setting is required if $conf['reverse_proxy'] is TRUE.
+ */
+# $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Set this value if your proxy server sends the client IP in a header
+ * other than X-Forwarded-For.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
+
+/**
+ * Page caching:
+ *
+ * By default, Drupal sends a "Vary: Cookie" HTTP header for anonymous page
+ * views. This tells a HTTP proxy that it may return a page from its local
+ * cache without contacting the web server, if the user sends the same Cookie
+ * header as the user who originally requested the cached page. Without "Vary:
+ * Cookie", authenticated users would also be served the anonymous page from
+ * the cache. If the site has mostly anonymous users except a few known
+ * editors/administrators, the Vary header can be omitted. This allows for
+ * better caching in HTTP proxies (including reverse proxies), i.e. even if
+ * clients send different cookies, they still get content served from the cache.
+ * However, authenticated users should access the site directly (i.e. not use an
+ * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
+ * getting cached pages from the proxy.
+ */
+# $conf['omit_vary_cookie'] = TRUE;
+
+/**
+ * CSS/JS aggregated file gzip compression:
+ *
+ * By default, when CSS or JS aggregation and clean URLs are enabled Drupal will
+ * store a gzip compressed (.gz) copy of the aggregated files. If this file is
+ * available then rewrite rules in the default .htaccess file will serve these
+ * files to browsers that accept gzip encoded content. This allows pages to load
+ * faster for these users and has minimal impact on server load. If you are
+ * using a webserver other than Apache httpd, or a caching reverse proxy that is
+ * configured to cache and compress these files itself you may want to uncomment
+ * one or both of the below lines, which will prevent gzip files being stored.
+ */
+# $conf['css_gzip_compression'] = FALSE;
+# $conf['js_gzip_compression'] = FALSE;
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
+
+/**
+ *
+ * IP blocking:
+ *
+ * To bypass database queries for denied IP addresses, use this setting.
+ * Drupal queries the {blocked_ips} table by default on every page request
+ * for both authenticated and anonymous users. This allows the system to
+ * block IP addresses from within the administrative interface and before any
+ * modules are loaded. However on high traffic websites you may want to avoid
+ * this query, allowing you to bypass database access altogether for anonymous
+ * users under certain caching configurations.
+ *
+ * If using this setting, you will need to add back any IP addresses which
+ * you may have blocked via the administrative interface. Each element of this
+ * array represents a blocked IP address. Uncommenting the array and leaving it
+ * empty will have the effect of disabling IP blocking on your site.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['blocked_ips'] = array(
+#   'a.b.c.d',
+# );
+
+/**
+ * Fast 404 pages:
+ *
+ * Drupal can generate fully themed 404 pages. However, some of these responses
+ * are for images or other resource files that are not displayed to the user.
+ * This can waste bandwidth, and also generate server load.
+ *
+ * The options below return a simple, fast 404 page for URLs matching a
+ * specific pattern:
+ * - 404_fast_paths_exclude: A regular expression to match paths to exclude,
+ *   such as images generated by image styles, or dynamically-resized images.
+ *   If you need to add more paths, you can add '|path' to the expression.
+ * - 404_fast_paths: A regular expression to match paths that should return a
+ *   simple 404 page, rather than the fully themed 404 page. If you don't have
+ *   any aliases ending in htm or html you can add '|s?html?' to the expression.
+ * - 404_fast_html: The html to return for simple 404 pages.
+ *
+ * Add leading hash signs if you would like to disable this functionality.
+ */
+$conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
+$conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/**
+ * By default, fast 404s are returned as part of the normal page request
+ * process, which will properly serve valid pages that happen to match and will
+ * also log actual 404s to the Drupal log. Alternatively you can choose to
+ * return a 404 now by uncommenting the following line. This will reduce server
+ * load, but will cause even valid pages that happen to match the pattern to
+ * return 404s, rather than the actual page. It will also prevent the Drupal
+ * system log entry. Ensure you understand the effects of this before enabling.
+ *
+ * To enable this functionality, remove the leading hash sign below.
+ */
+# drupal_fast_404();
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface by providing either SSH or FTP
+ * credentials. This allows the site to update the new files as the user who
+ * owns all the Drupal files, instead of as the user the webserver is running
+ * as. However, some sites might wish to disable this functionality, and only
+ * update the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+///////////////////////////////////////////////////////////////////////
+//       Please don't edit anything between <@@ADCP_CONF@@> tags     //
+// This section is autogenerated by Acquia Dev Desktop Control Panel //
+///////////////////////////////////////////////////////////////////////
+//<@@ADCP_CONF@@>
+$base_url = 'http://nick.beebemed.org:8082';
+
+//D6 DB config
+$db_url = 'mysqli://drupaluser@127.0.0.1:33066/beebemed';
+
+//D7 DB config
+$databases = array('default' => array('default' => array(
+  'driver' => 'mysql',
+  'database' => 'beebemed',
+  'username' => 'drupaluser',
+  'password' => '',
+  'host' => '127.0.0.1',
+  'port' => 33066 )));
+//</@@ADCP_CONF@@>
+
+
+/********************************************************************************************
+<?php
+
+/**
+ * @file
+ * Drupal site-specific configuration file.
+ *
+ * IMPORTANT NOTE:
+ * This file may have been set to read-only by the Drupal installation
+ * program. If you make changes to this file, be sure to protect it again
+ * after making your modifications. Failure to remove write permissions
+ * to this file is a security risk.
+ *
+ * The configuration file to be loaded is based upon the rules below.
+ *
+ * The configuration directory will be discovered by stripping the
+ * website's hostname from left to right and pathname from right to
+ * left. The first configuration file found will be used and any
+ * others will be ignored. If no other configuration file is found
+ * then the default configuration file at 'sites/default' will be used.
+ *
+ * For example, for a fictitious site installed at
+ * http://www.drupal.org/mysite/test/, the 'settings.php'
+ * is searched in the following directories:
+ *
+ * - sites/www.drupal.org.mysite.test
+ * - sites/drupal.org.mysite.test
+ * - sites/org.mysite.test
+ *
+ * - sites/www.drupal.org.mysite
+ * - sites/drupal.org.mysite
+ * - sites/org.mysite
+ *
+ * - sites/www.drupal.org
+ * - sites/drupal.org
+ * - sites/org
+ *
+ * - sites/default
+ *
+ * If you are installing on a non-standard port number, prefix the
+ * hostname with that number. For example,
+ * http://www.drupal.org:8080/mysite/test/ could be loaded from
+ * sites/8080.www.drupal.org.mysite.test/.
+ */
+
+/**
+ * Database settings:
+ *
+ * The $databases array specifies the database connection or
+ * connections that Drupal may use.  Drupal is able to connect
+ * to multiple databases, including multiple types of databases,
+ * during the same request.
+ *
+ * Each database connection is specified as an array of settings,
+ * similar to the following:
+ * @code
+ * array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'port' => 3306,
+ *   'prefix' => 'myprefix_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * The "driver" property indicates what Drupal database driver the
+ * connection should use.  This is usually the same as the name of the
+ * database type, such as mysql or sqlite, but not always.  The other
+ * properties will vary depending on the driver.  For SQLite, you must
+ * specify a database file name in a directory that is writable by the
+ * webserver.  For most other drivers, you must specify a
+ * username, password, host, and database name.
+ *
+ * Some database engines support transactions.  In order to enable
+ * transaction support for a given database, set the 'transactions' key
+ * to TRUE.  To disable it, set it to FALSE.  Note that the default value
+ * varies by driver.  For MySQL, the default is FALSE since MyISAM tables
+ * do not support transactions.
+ *
+ * For each database, you may optionally specify multiple "target" databases.
+ * A target database allows Drupal to try to send certain queries to a
+ * different database if it can but fall back to the default connection if not.
+ * That is useful for master/slave replication, as Drupal may try to connect
+ * to a slave server when appropriate and if one is not available will simply
+ * fall back to the single master server.
+ *
+ * The general format for the $databases array is as follows:
+ * @code
+ * $databases['default']['default'] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['extra']['default'] = $info_array;
+ * @endcode
+ *
+ * In the above example, $info_array is an array of settings described above.
+ * The first line sets a "default" database that has one master database
+ * (the second level default).  The second and third lines create an array
+ * of potential slave databases.  Drupal will select one at random for a given
+ * request as needed.  The fourth line creates a new database with a name of
+ * "extra".
+ *
+ * For a single database configuration, the following is sufficient:
+ * @code
+ * $databases['default']['default'] = array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'prefix' => 'main_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * You can optionally set prefixes for some or all database table names
+ * by using the 'prefix' setting. If a prefix is specified, the table
+ * name will be prepended with its value. Be sure to use valid database
+ * characters only, usually alphanumeric and underscore. If no prefixes
+ * are desired, leave it as an empty string ''.
+ *
+ * To have all database names prefixed, set 'prefix' as a string:
+ * @code
+ *   'prefix' => 'main_',
+ * @endcode
+ * To provide prefixes for specific tables, set 'prefix' as an array.
+ * The array's keys are the table names and the values are the prefixes.
+ * The 'default' element is mandatory and holds the prefix for any tables
+ * not specified elsewhere in the array. Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main_',
+ *     'users'     => 'shared_',
+ *     'sessions'  => 'shared_',
+ *     'role'      => 'shared_',
+ *     'authmap'   => 'shared_',
+ *   ),
+ * @endcode
+ * You can also use a reference to a schema/database as a prefix. This maybe
+ * useful if your Drupal installation exists in a schema that is not the default
+ * or you want to access several databases from the same code base at the same
+ * time.
+ * Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main.',
+ *     'users'     => 'shared.',
+ *     'sessions'  => 'shared.',
+ *     'role'      => 'shared.',
+ *     'authmap'   => 'shared.',
+ *   );
+ * @endcode
+ * NOTE: MySQL and SQLite's definition of a schema is a database.
+ *
+ * Advanced users can add or override initial commands to execute when
+ * connecting to the database server, as well as PDO connection settings. For
+ * example, to enable MySQL SELECT queries to exceed the max_join_size system
+ * variable, and to reduce the database connection timeout to 5 seconds:
+ *
+ * @code
+ * $databases['default']['default'] = array(
+ *   'init_commands' => array(
+ *     'big_selects' => 'SET SQL_BIG_SELECTS=1',
+ *   ),
+ *   'pdo' => array(
+ *     PDO::ATTR_TIMEOUT => 5,
+ *   ),
+ * );
+ * @endcode
+ *
+ * WARNING: These defaults are designed for database portability. Changing them
+ * may cause unexpected behavior, including potential data loss.
+ *
+ * @see DatabaseConnection_mysql::__construct
+ * @see DatabaseConnection_pgsql::__construct
+ * @see DatabaseConnection_sqlite::__construct
+ *
+ * Database configuration format:
+ * @code
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'mysql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'pgsql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'sqlite',
+ *     'database' => '/path/to/databasefilename',
+ *   );
+ * @endcode
+ */
+//$databases = array();
+
+/**
+ * Access control for update.php script.
+ *
+ * If you are updating your Drupal installation using the update.php script but
+ * are not logged in using either an account with the "Administer software
+ * updates" permission or the site maintenance account (the account that was
+ * created during installation), you will need to modify the access check
+ * statement below. Change the FALSE to a TRUE to disable the access check.
+ * After finishing the upgrade, be sure to open this file again and change the
+ * TRUE back to a FALSE!
+ */
+$update_free_access = FALSE;
+
+/**
+ * Salt for one-time login links and cancel links, form tokens, etc.
+ *
+ * This variable will be set to a random value by the installer. All one-time
+ * login links will be invalidated if the value is changed. Note that if your
+ * site is deployed on a cluster of web servers, you must ensure that this
+ * variable has the same value on each server. If this variable is empty, a hash
+ * of the serialized database credentials will be used as a fallback salt.
+ *
+ * For enhanced security, you may set this variable to a value using the
+ * contents of a file outside your docroot that is never saved together
+ * with any backups of your Drupal files and database.
+ *
+ * Example:
+ *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
+ *
+ */
+$drupal_hash_salt = '';
+
+/**
+ * Base URL (optional).
+ *
+ * If Drupal is generating incorrect URLs on your site, which could
+ * be in HTML headers (links to CSS and JS files) or visible links on pages
+ * (such as in menus), uncomment the Base URL statement below (remove the
+ * leading hash sign) and fill in the absolute URL to your Drupal installation.
+ *
+ * You might also want to force users to use a given domain.
+ * See the .htaccess file for more information.
+ *
+ * Examples:
+ *   $base_url = 'http://www.example.com';
+ *   $base_url = 'http://www.example.com:8888';
+ *   $base_url = 'http://www.example.com/drupal';
+ *   $base_url = 'https://www.example.com:8888/drupal';
+ *
+ * It is not allowed to have a trailing slash; Drupal will add it
+ * for you.
+ */
+# $base_url = 'http://www.example.com';  // NO trailing slash!
+
+/**
+ * PHP settings:
+ *
+ * To see what PHP settings are possible, including whether they can be set at
+ * runtime (by using ini_set()), read the PHP documentation:
+ * http://www.php.net/manual/en/ini.list.php
+ * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * runtime settings and the .htaccess file for non-runtime settings. Settings
+ * defined there should not be duplicated here so as to avoid conflict issues.
+ */
+
+/**
+ * Some distributions of Linux (most notably Debian) ship their PHP
+ * installations with garbage collection (gc) disabled. Since Drupal depends on
+ * PHP's garbage collection for clearing sessions, ensure that garbage
+ * collection occurs by using the most common settings.
+ */
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);
+
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/en/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
+
+/**
+ * Drupal automatically generates a unique session cookie name for each site
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains. Make sure to always start the $cookie_domain
+ * with a leading dot, as per RFC 2109.
+ */
+#$cookie_domain = '.wilgusassociates.com';
+
+/**
+ * Variable overrides:
+ *
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
+ */
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * Reverse Proxy Configuration:
+ *
+ * Reverse proxy servers are often used to enhance the performance
+ * of heavily visited sites and may also provide other site caching,
+ * security, or encryption benefits. In an environment where Drupal
+ * is behind a reverse proxy, the real IP address of the client should
+ * be determined such that the correct client IP address is available
+ * to Drupal's logging, statistics, and access management systems. In
+ * the most simple scenario, the proxy server will add an
+ * X-Forwarded-For header to the request that contains the client IP
+ * address. However, HTTP headers are vulnerable to spoofing, where a
+ * malicious client could bypass restrictions by setting the
+ * X-Forwarded-For header directly. Therefore, Drupal's proxy
+ * configuration requires the IP addresses of all remote proxies to be
+ * specified in $conf['reverse_proxy_addresses'] to work correctly.
+ *
+ * Enable this setting to get Drupal to determine the client IP from
+ * the X-Forwarded-For header (or $conf['reverse_proxy_header'] if set).
+ * If you are unsure about this setting, do not have a reverse proxy,
+ * or Drupal operates in a shared hosting environment, this setting
+ * should remain commented out.
+ *
+ * In order for this setting to be used you must specify every possible
+ * reverse proxy IP address in $conf['reverse_proxy_addresses'].
+ * If a complete list of reverse proxies is not available in your
+ * environment (for example, if you use a CDN) you may set the
+ * $_SERVER['REMOTE_ADDR'] variable directly in settings.php.
+ * Be aware, however, that it is likely that this would allow IP
+ * address spoofing unless more advanced precautions are taken.
+ */
+# $conf['reverse_proxy'] = TRUE;
+
+/**
+ * Specify every reverse proxy IP address in your environment.
+ * This setting is required if $conf['reverse_proxy'] is TRUE.
+ */
+# $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Set this value if your proxy server sends the client IP in a header
+ * other than X-Forwarded-For.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
+
+/**
+ * Page caching:
+ *
+ * By default, Drupal sends a "Vary: Cookie" HTTP header for anonymous page
+ * views. This tells a HTTP proxy that it may return a page from its local
+ * cache without contacting the web server, if the user sends the same Cookie
+ * header as the user who originally requested the cached page. Without "Vary:
+ * Cookie", authenticated users would also be served the anonymous page from
+ * the cache. If the site has mostly anonymous users except a few known
+ * editors/administrators, the Vary header can be omitted. This allows for
+ * better caching in HTTP proxies (including reverse proxies), i.e. even if
+ * clients send different cookies, they still get content served from the cache.
+ * However, authenticated users should access the site directly (i.e. not use an
+ * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
+ * getting cached pages from the proxy.
+ */
+# $conf['omit_vary_cookie'] = TRUE;
+
+/**
+ * CSS/JS aggregated file gzip compression:
+ *
+ * By default, when CSS or JS aggregation and clean URLs are enabled Drupal will
+ * store a gzip compressed (.gz) copy of the aggregated files. If this file is
+ * available then rewrite rules in the default .htaccess file will serve these
+ * files to browsers that accept gzip encoded content. This allows pages to load
+ * faster for these users and has minimal impact on server load. If you are
+ * using a webserver other than Apache httpd, or a caching reverse proxy that is
+ * configured to cache and compress these files itself you may want to uncomment
+ * one or both of the below lines, which will prevent gzip files being stored.
+ */
+# $conf['css_gzip_compression'] = FALSE;
+# $conf['js_gzip_compression'] = FALSE;
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
+
+/**
+ *
+ * IP blocking:
+ *
+ * To bypass database queries for denied IP addresses, use this setting.
+ * Drupal queries the {blocked_ips} table by default on every page request
+ * for both authenticated and anonymous users. This allows the system to
+ * block IP addresses from within the administrative interface and before any
+ * modules are loaded. However on high traffic websites you may want to avoid
+ * this query, allowing you to bypass database access altogether for anonymous
+ * users under certain caching configurations.
+ *
+ * If using this setting, you will need to add back any IP addresses which
+ * you may have blocked via the administrative interface. Each element of this
+ * array represents a blocked IP address. Uncommenting the array and leaving it
+ * empty will have the effect of disabling IP blocking on your site.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['blocked_ips'] = array(
+#   'a.b.c.d',
+# );
+
+/**
+ * Fast 404 pages:
+ *
+ * Drupal can generate fully themed 404 pages. However, some of these responses
+ * are for images or other resource files that are not displayed to the user.
+ * This can waste bandwidth, and also generate server load.
+ *
+ * The options below return a simple, fast 404 page for URLs matching a
+ * specific pattern:
+ * - 404_fast_paths_exclude: A regular expression to match paths to exclude,
+ *   such as images generated by image styles, or dynamically-resized images.
+ *   If you need to add more paths, you can add '|path' to the expression.
+ * - 404_fast_paths: A regular expression to match paths that should return a
+ *   simple 404 page, rather than the fully themed 404 page. If you don't have
+ *   any aliases ending in htm or html you can add '|s?html?' to the expression.
+ * - 404_fast_html: The html to return for simple 404 pages.
+ *
+ * Add leading hash signs if you would like to disable this functionality.
+ */
+$conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
+$conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/**
+ * By default, fast 404s are returned as part of the normal page request
+ * process, which will properly serve valid pages that happen to match and will
+ * also log actual 404s to the Drupal log. Alternatively you can choose to
+ * return a 404 now by uncommenting the following line. This will reduce server
+ * load, but will cause even valid pages that happen to match the pattern to
+ * return 404s, rather than the actual page. It will also prevent the Drupal
+ * system log entry. Ensure you understand the effects of this before enabling.
+ *
+ * To enable this functionality, remove the leading hash sign below.
+ */
+# drupal_fast_404();
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface by providing either SSH or FTP
+ * credentials. This allows the site to update the new files as the user who
+ * owns all the Drupal files, instead of as the user the webserver is running
+ * as. However, some sites might wish to disable this functionality, and only
+ * update the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+///////////////////////////////////////////////////////////////////////
+//       Please don't edit anything between <@@ADCP_CONF@@> tags     //
+// This section is autogenerated by Acquia Dev Desktop Control Panel //
+///////////////////////////////////////////////////////////////////////
+//<@@ADCP_CONF@@>
+$base_url = 'http://nick.visitlewes.com:8082';
+
+//D6 DB config
+$db_url = 'mysqli://drupaluser@127.0.0.1:33066/visitlewes';
+
+//D7 DB config
+$databases = array('default' => array('default' => array(
+  'driver' => 'mysql',
+  'database' => 'visitlewes',
+  'username' => 'drupaluser',
+  'password' => '',
+  'host' => '127.0.0.1',
+  'port' => 33066 )));
+//</@@ADCP_CONF@@>
+
+
+/********************************************************************************************
+<?php
+
+/**
+ * @file
+ * Drupal site-specific configuration file.
+ *
+ * IMPORTANT NOTE:
+ * This file may have been set to read-only by the Drupal installation
+ * program. If you make changes to this file, be sure to protect it again
+ * after making your modifications. Failure to remove write permissions
+ * to this file is a security risk.
+ *
+ * The configuration file to be loaded is based upon the rules below.
+ *
+ * The configuration directory will be discovered by stripping the
+ * website's hostname from left to right and pathname from right to
+ * left. The first configuration file found will be used and any
+ * others will be ignored. If no other configuration file is found
+ * then the default configuration file at 'sites/default' will be used.
+ *
+ * For example, for a fictitious site installed at
+ * http://www.drupal.org/mysite/test/, the 'settings.php'
+ * is searched in the following directories:
+ *
+ * - sites/www.drupal.org.mysite.test
+ * - sites/drupal.org.mysite.test
+ * - sites/org.mysite.test
+ *
+ * - sites/www.drupal.org.mysite
+ * - sites/drupal.org.mysite
+ * - sites/org.mysite
+ *
+ * - sites/www.drupal.org
+ * - sites/drupal.org
+ * - sites/org
+ *
+ * - sites/default
+ *
+ * If you are installing on a non-standard port number, prefix the
+ * hostname with that number. For example,
+ * http://www.drupal.org:8080/mysite/test/ could be loaded from
+ * sites/8080.www.drupal.org.mysite.test/.
+ */
+
+/**
+ * Database settings:
+ *
+ * The $databases array specifies the database connection or
+ * connections that Drupal may use.  Drupal is able to connect
+ * to multiple databases, including multiple types of databases,
+ * during the same request.
+ *
+ * Each database connection is specified as an array of settings,
+ * similar to the following:
+ * @code
+ * array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'port' => 3306,
+ *   'prefix' => 'myprefix_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * The "driver" property indicates what Drupal database driver the
+ * connection should use.  This is usually the same as the name of the
+ * database type, such as mysql or sqlite, but not always.  The other
+ * properties will vary depending on the driver.  For SQLite, you must
+ * specify a database file name in a directory that is writable by the
+ * webserver.  For most other drivers, you must specify a
+ * username, password, host, and database name.
+ *
+ * Some database engines support transactions.  In order to enable
+ * transaction support for a given database, set the 'transactions' key
+ * to TRUE.  To disable it, set it to FALSE.  Note that the default value
+ * varies by driver.  For MySQL, the default is FALSE since MyISAM tables
+ * do not support transactions.
+ *
+ * For each database, you may optionally specify multiple "target" databases.
+ * A target database allows Drupal to try to send certain queries to a
+ * different database if it can but fall back to the default connection if not.
+ * That is useful for master/slave replication, as Drupal may try to connect
+ * to a slave server when appropriate and if one is not available will simply
+ * fall back to the single master server.
+ *
+ * The general format for the $databases array is as follows:
+ * @code
+ * $databases['default']['default'] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['extra']['default'] = $info_array;
+ * @endcode
+ *
+ * In the above example, $info_array is an array of settings described above.
+ * The first line sets a "default" database that has one master database
+ * (the second level default).  The second and third lines create an array
+ * of potential slave databases.  Drupal will select one at random for a given
+ * request as needed.  The fourth line creates a new database with a name of
+ * "extra".
+ *
+ * For a single database configuration, the following is sufficient:
+ * @code
+ * $databases['default']['default'] = array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'prefix' => 'main_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * You can optionally set prefixes for some or all database table names
+ * by using the 'prefix' setting. If a prefix is specified, the table
+ * name will be prepended with its value. Be sure to use valid database
+ * characters only, usually alphanumeric and underscore. If no prefixes
+ * are desired, leave it as an empty string ''.
+ *
+ * To have all database names prefixed, set 'prefix' as a string:
+ * @code
+ *   'prefix' => 'main_',
+ * @endcode
+ * To provide prefixes for specific tables, set 'prefix' as an array.
+ * The array's keys are the table names and the values are the prefixes.
+ * The 'default' element is mandatory and holds the prefix for any tables
+ * not specified elsewhere in the array. Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main_',
+ *     'users'     => 'shared_',
+ *     'sessions'  => 'shared_',
+ *     'role'      => 'shared_',
+ *     'authmap'   => 'shared_',
+ *   ),
+ * @endcode
+ * You can also use a reference to a schema/database as a prefix. This maybe
+ * useful if your Drupal installation exists in a schema that is not the default
+ * or you want to access several databases from the same code base at the same
+ * time.
+ * Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main.',
+ *     'users'     => 'shared.',
+ *     'sessions'  => 'shared.',
+ *     'role'      => 'shared.',
+ *     'authmap'   => 'shared.',
+ *   );
+ * @endcode
+ * NOTE: MySQL and SQLite's definition of a schema is a database.
+ *
+ * Advanced users can add or override initial commands to execute when
+ * connecting to the database server, as well as PDO connection settings. For
+ * example, to enable MySQL SELECT queries to exceed the max_join_size system
+ * variable, and to reduce the database connection timeout to 5 seconds:
+ *
+ * @code
+ * $databases['default']['default'] = array(
+ *   'init_commands' => array(
+ *     'big_selects' => 'SET SQL_BIG_SELECTS=1',
+ *   ),
+ *   'pdo' => array(
+ *     PDO::ATTR_TIMEOUT => 5,
+ *   ),
+ * );
+ * @endcode
+ *
+ * WARNING: These defaults are designed for database portability. Changing them
+ * may cause unexpected behavior, including potential data loss.
+ *
+ * @see DatabaseConnection_mysql::__construct
+ * @see DatabaseConnection_pgsql::__construct
+ * @see DatabaseConnection_sqlite::__construct
+ *
+ * Database configuration format:
+ * @code
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'mysql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'pgsql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'sqlite',
+ *     'database' => '/path/to/databasefilename',
+ *   );
+ * @endcode
+ */
+//$databases = array();
+
+/**
+ * Access control for update.php script.
+ *
+ * If you are updating your Drupal installation using the update.php script but
+ * are not logged in using either an account with the "Administer software
+ * updates" permission or the site maintenance account (the account that was
+ * created during installation), you will need to modify the access check
+ * statement below. Change the FALSE to a TRUE to disable the access check.
+ * After finishing the upgrade, be sure to open this file again and change the
+ * TRUE back to a FALSE!
+ */
+$update_free_access = FALSE;
+
+/**
+ * Salt for one-time login links and cancel links, form tokens, etc.
+ *
+ * This variable will be set to a random value by the installer. All one-time
+ * login links will be invalidated if the value is changed. Note that if your
+ * site is deployed on a cluster of web servers, you must ensure that this
+ * variable has the same value on each server. If this variable is empty, a hash
+ * of the serialized database credentials will be used as a fallback salt.
+ *
+ * For enhanced security, you may set this variable to a value using the
+ * contents of a file outside your docroot that is never saved together
+ * with any backups of your Drupal files and database.
+ *
+ * Example:
+ *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
+ *
+ */
+$drupal_hash_salt = '';
+
+/**
+ * Base URL (optional).
+ *
+ * If Drupal is generating incorrect URLs on your site, which could
+ * be in HTML headers (links to CSS and JS files) or visible links on pages
+ * (such as in menus), uncomment the Base URL statement below (remove the
+ * leading hash sign) and fill in the absolute URL to your Drupal installation.
+ *
+ * You might also want to force users to use a given domain.
+ * See the .htaccess file for more information.
+ *
+ * Examples:
+ *   $base_url = 'http://www.example.com';
+ *   $base_url = 'http://www.example.com:8888';
+ *   $base_url = 'http://www.example.com/drupal';
+ *   $base_url = 'https://www.example.com:8888/drupal';
+ *
+ * It is not allowed to have a trailing slash; Drupal will add it
+ * for you.
+ */
+# $base_url = 'http://www.example.com';  // NO trailing slash!
+
+/**
+ * PHP settings:
+ *
+ * To see what PHP settings are possible, including whether they can be set at
+ * runtime (by using ini_set()), read the PHP documentation:
+ * http://www.php.net/manual/en/ini.list.php
+ * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * runtime settings and the .htaccess file for non-runtime settings. Settings
+ * defined there should not be duplicated here so as to avoid conflict issues.
+ */
+
+/**
+ * Some distributions of Linux (most notably Debian) ship their PHP
+ * installations with garbage collection (gc) disabled. Since Drupal depends on
+ * PHP's garbage collection for clearing sessions, ensure that garbage
+ * collection occurs by using the most common settings.
+ */
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);
+
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/en/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
+
+/**
+ * Drupal automatically generates a unique session cookie name for each site
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains. Make sure to always start the $cookie_domain
+ * with a leading dot, as per RFC 2109.
+ */
+#$cookie_domain = '.wilgusassociates.com';
+
+/**
+ * Variable overrides:
+ *
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
+ */
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * Reverse Proxy Configuration:
+ *
+ * Reverse proxy servers are often used to enhance the performance
+ * of heavily visited sites and may also provide other site caching,
+ * security, or encryption benefits. In an environment where Drupal
+ * is behind a reverse proxy, the real IP address of the client should
+ * be determined such that the correct client IP address is available
+ * to Drupal's logging, statistics, and access management systems. In
+ * the most simple scenario, the proxy server will add an
+ * X-Forwarded-For header to the request that contains the client IP
+ * address. However, HTTP headers are vulnerable to spoofing, where a
+ * malicious client could bypass restrictions by setting the
+ * X-Forwarded-For header directly. Therefore, Drupal's proxy
+ * configuration requires the IP addresses of all remote proxies to be
+ * specified in $conf['reverse_proxy_addresses'] to work correctly.
+ *
+ * Enable this setting to get Drupal to determine the client IP from
+ * the X-Forwarded-For header (or $conf['reverse_proxy_header'] if set).
+ * If you are unsure about this setting, do not have a reverse proxy,
+ * or Drupal operates in a shared hosting environment, this setting
+ * should remain commented out.
+ *
+ * In order for this setting to be used you must specify every possible
+ * reverse proxy IP address in $conf['reverse_proxy_addresses'].
+ * If a complete list of reverse proxies is not available in your
+ * environment (for example, if you use a CDN) you may set the
+ * $_SERVER['REMOTE_ADDR'] variable directly in settings.php.
+ * Be aware, however, that it is likely that this would allow IP
+ * address spoofing unless more advanced precautions are taken.
+ */
+# $conf['reverse_proxy'] = TRUE;
+
+/**
+ * Specify every reverse proxy IP address in your environment.
+ * This setting is required if $conf['reverse_proxy'] is TRUE.
+ */
+# $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Set this value if your proxy server sends the client IP in a header
+ * other than X-Forwarded-For.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
+
+/**
+ * Page caching:
+ *
+ * By default, Drupal sends a "Vary: Cookie" HTTP header for anonymous page
+ * views. This tells a HTTP proxy that it may return a page from its local
+ * cache without contacting the web server, if the user sends the same Cookie
+ * header as the user who originally requested the cached page. Without "Vary:
+ * Cookie", authenticated users would also be served the anonymous page from
+ * the cache. If the site has mostly anonymous users except a few known
+ * editors/administrators, the Vary header can be omitted. This allows for
+ * better caching in HTTP proxies (including reverse proxies), i.e. even if
+ * clients send different cookies, they still get content served from the cache.
+ * However, authenticated users should access the site directly (i.e. not use an
+ * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
+ * getting cached pages from the proxy.
+ */
+# $conf['omit_vary_cookie'] = TRUE;
+
+/**
+ * CSS/JS aggregated file gzip compression:
+ *
+ * By default, when CSS or JS aggregation and clean URLs are enabled Drupal will
+ * store a gzip compressed (.gz) copy of the aggregated files. If this file is
+ * available then rewrite rules in the default .htaccess file will serve these
+ * files to browsers that accept gzip encoded content. This allows pages to load
+ * faster for these users and has minimal impact on server load. If you are
+ * using a webserver other than Apache httpd, or a caching reverse proxy that is
+ * configured to cache and compress these files itself you may want to uncomment
+ * one or both of the below lines, which will prevent gzip files being stored.
+ */
+# $conf['css_gzip_compression'] = FALSE;
+# $conf['js_gzip_compression'] = FALSE;
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
+
+/**
+ *
+ * IP blocking:
+ *
+ * To bypass database queries for denied IP addresses, use this setting.
+ * Drupal queries the {blocked_ips} table by default on every page request
+ * for both authenticated and anonymous users. This allows the system to
+ * block IP addresses from within the administrative interface and before any
+ * modules are loaded. However on high traffic websites you may want to avoid
+ * this query, allowing you to bypass database access altogether for anonymous
+ * users under certain caching configurations.
+ *
+ * If using this setting, you will need to add back any IP addresses which
+ * you may have blocked via the administrative interface. Each element of this
+ * array represents a blocked IP address. Uncommenting the array and leaving it
+ * empty will have the effect of disabling IP blocking on your site.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['blocked_ips'] = array(
+#   'a.b.c.d',
+# );
+
+/**
+ * Fast 404 pages:
+ *
+ * Drupal can generate fully themed 404 pages. However, some of these responses
+ * are for images or other resource files that are not displayed to the user.
+ * This can waste bandwidth, and also generate server load.
+ *
+ * The options below return a simple, fast 404 page for URLs matching a
+ * specific pattern:
+ * - 404_fast_paths_exclude: A regular expression to match paths to exclude,
+ *   such as images generated by image styles, or dynamically-resized images.
+ *   If you need to add more paths, you can add '|path' to the expression.
+ * - 404_fast_paths: A regular expression to match paths that should return a
+ *   simple 404 page, rather than the fully themed 404 page. If you don't have
+ *   any aliases ending in htm or html you can add '|s?html?' to the expression.
+ * - 404_fast_html: The html to return for simple 404 pages.
+ *
+ * Add leading hash signs if you would like to disable this functionality.
+ */
+$conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
+$conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/**
+ * By default, fast 404s are returned as part of the normal page request
+ * process, which will properly serve valid pages that happen to match and will
+ * also log actual 404s to the Drupal log. Alternatively you can choose to
+ * return a 404 now by uncommenting the following line. This will reduce server
+ * load, but will cause even valid pages that happen to match the pattern to
+ * return 404s, rather than the actual page. It will also prevent the Drupal
+ * system log entry. Ensure you understand the effects of this before enabling.
+ *
+ * To enable this functionality, remove the leading hash sign below.
+ */
+# drupal_fast_404();
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface by providing either SSH or FTP
+ * credentials. This allows the site to update the new files as the user who
+ * owns all the Drupal files, instead of as the user the webserver is running
+ * as. However, some sites might wish to disable this functionality, and only
+ * update the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+///////////////////////////////////////////////////////////////////////
+//       Please don't edit anything between <@@ADCP_CONF@@> tags     //
+// This section is autogenerated by Acquia Dev Desktop Control Panel //
+///////////////////////////////////////////////////////////////////////
+//<@@ADCP_CONF@@>
+$base_url = 'http://nick.visitlewes.com:8082';
+
+//D6 DB config
+$db_url = 'mysqli://drupaluser@127.0.0.1:33066/visitlewes';
+
+//D7 DB config
+$databases = array('default' => array('default' => array(
+  'driver' => 'mysql',
+  'database' => 'visitlewes',
+  'username' => 'drupaluser',
+  'password' => '',
+  'host' => '127.0.0.1',
+  'port' => 33066 )));
+//</@@ADCP_CONF@@>
+
+/********************************************************************************************
+<?php
+
+/**
+ * @file
+ * Drupal site-specific configuration file.
+ *
+ * IMPORTANT NOTE:
+ * This file may have been set to read-only by the Drupal installation
+ * program. If you make changes to this file, be sure to protect it again
+ * after making your modifications. Failure to remove write permissions
+ * to this file is a security risk.
+ *
+ * The configuration file to be loaded is based upon the rules below.
+ *
+ * The configuration directory will be discovered by stripping the
+ * website's hostname from left to right and pathname from right to
+ * left. The first configuration file found will be used and any
+ * others will be ignored. If no other configuration file is found
+ * then the default configuration file at 'sites/default' will be used.
+ *
+ * For example, for a fictitious site installed at
+ * http://www.drupal.org/mysite/test/, the 'settings.php'
+ * is searched in the following directories:
+ *
+ *  1. sites/www.drupal.org.mysite.test
+ *  2. sites/drupal.org.mysite.test
+ *  3. sites/org.mysite.test
+ *
+ *  4. sites/www.drupal.org.mysite
+ *  5. sites/drupal.org.mysite
+ *  6. sites/org.mysite
+ *
+ *  7. sites/www.drupal.org
+ *  8. sites/drupal.org
+ *  9. sites/org
+ *
+ * 10. sites/default
+ *
+ * If you are installing on a non-standard port number, prefix the
+ * hostname with that number. For example,
+ * http://www.drupal.org:8080/mysite/test/ could be loaded from
+ * sites/8080.www.drupal.org.mysite.test/.
+ */
+
+/**
+ * Database settings:
+ *
+ * The $databases array specifies the database connection or
+ * connections that Drupal may use.  Drupal is able to connect
+ * to multiple databases, including multiple types of databases,
+ * during the same request.
+ *
+ * Each database connection is specified as an array of settings,
+ * similar to the following:
+ * @code
+ * array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'port' => 3306,
+ *   'prefix' => 'myprefix_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * The "driver" property indicates what Drupal database driver the
+ * connection should use.  This is usually the same as the name of the
+ * database type, such as mysql or sqlite, but not always.  The other
+ * properties will vary depending on the driver.  For SQLite, you must
+ * specify a database file name in a directory that is writable by the
+ * webserver.  For most other drivers, you must specify a
+ * username, password, host, and database name.
+ *
+ * Some database engines support transactions.  In order to enable
+ * transaction support for a given database, set the 'transactions' key
+ * to TRUE.  To disable it, set it to FALSE.  Note that the default value
+ * varies by driver.  For MySQL, the default is FALSE since MyISAM tables
+ * do not support transactions.
+ *
+ * For each database, you may optionally specify multiple "target" databases.
+ * A target database allows Drupal to try to send certain queries to a
+ * different database if it can but fall back to the default connection if not.
+ * That is useful for master/slave replication, as Drupal may try to connect
+ * to a slave server when appropriate and if one is not available will simply
+ * fall back to the single master server.
+ *
+ * The general format for the $databases array is as follows:
+ * @code
+ * $databases['default']['default'] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['extra']['default'] = $info_array;
+ * @endcode
+ *
+ * In the above example, $info_array is an array of settings described above.
+ * The first line sets a "default" database that has one master database
+ * (the second level default).  The second and third lines create an array
+ * of potential slave databases.  Drupal will select one at random for a given
+ * request as needed.  The fourth line creates a new database with a name of
+ * "extra".
+ *
+ * For a single database configuration, the following is sufficient:
+ * @code
+ * $databases['default']['default'] = array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'prefix' => 'main_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * You can optionally set prefixes for some or all database table names
+ * by using the 'prefix' setting. If a prefix is specified, the table
+ * name will be prepended with its value. Be sure to use valid database
+ * characters only, usually alphanumeric and underscore. If no prefixes
+ * are desired, leave it as an empty string ''.
+ *
+ * To have all database names prefixed, set 'prefix' as a string:
+ * @code
+ *   'prefix' => 'main_',
+ * @endcode
+ * To provide prefixes for specific tables, set 'prefix' as an array.
+ * The array's keys are the table names and the values are the prefixes.
+ * The 'default' element is mandatory and holds the prefix for any tables
+ * not specified elsewhere in the array. Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main_',
+ *     'users'     => 'shared_',
+ *     'sessions'  => 'shared_',
+ *     'role'      => 'shared_',
+ *     'authmap'   => 'shared_',
+ *   ),
+ * @endcode
+ * You can also use a reference to a schema/database as a prefix. This maybe
+ * useful if your Drupal installation exists in a schema that is not the default
+ * or you want to access several databases from the same code base at the same
+ * time.
+ * Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main.',
+ *     'users'     => 'shared.',
+ *     'sessions'  => 'shared.',
+ *     'role'      => 'shared.',
+ *     'authmap'   => 'shared.',
+ *   );
+ * @endcode
+ * NOTE: MySQL and SQLite's definition of a schema is a database.
+ *
+ * Database configuration format:
+ * @code
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'mysql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'pgsql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'sqlite',
+ *     'database' => '/path/to/databasefilename',
+ *   );
+ * @endcode
+ */
+$databases = array();
+
+/**
+ * Access control for update.php script.
+ *
+ * If you are updating your Drupal installation using the update.php script but
+ * are not logged in using either an account with the "Administer software
+ * updates" permission or the site maintenance account (the account that was
+ * created during installation), you will need to modify the access check
+ * statement below. Change the FALSE to a TRUE to disable the access check.
+ * After finishing the upgrade, be sure to open this file again and change the
+ * TRUE back to a FALSE!
+ */
+$update_free_access = FALSE;
+
+/**
+ * Salt for one-time login links and cancel links, form tokens, etc.
+ *
+ * This variable will be set to a random value by the installer. All one-time
+ * login links will be invalidated if the value is changed.  Note that this
+ * variable must have the same value on every web server.  If this variable is
+ * empty, a hash of the serialized database credentials will be used as a
+ * fallback salt.
+ *
+ * For enhanced security, you may set this variable to a value using the
+ * contents of a file outside your docroot that is never saved together
+ * with any backups of your Drupal files and database.
+ *
+ * Example:
+ *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
+ *
+ */
+$drupal_hash_salt = '';
+
+/**
+ * Base URL (optional).
+ *
+ * If Drupal is generating incorrect URLs on your site, which could
+ * be in HTML headers (links to CSS and JS files) or visible links on pages
+ * (such as in menus), uncomment the Base URL statement below (remove the
+ * leading hash sign) and fill in the absolute URL to your Drupal installation.
+ *
+ * You might also want to force users to use a given domain.
+ * See the .htaccess file for more information.
+ *
+ * Examples:
+ *   $base_url = 'http://www.example.com';
+ *   $base_url = 'http://www.example.com:8888';
+ *   $base_url = 'http://www.example.com/drupal';
+ *   $base_url = 'https://www.example.com:8888/drupal';
+ *
+ * It is not allowed to have a trailing slash; Drupal will add it
+ * for you.
+ */
+# $base_url = 'http://www.example.com';  // NO trailing slash!
+
+/**
+ * PHP settings:
+ *
+ * To see what PHP settings are possible, including whether they can be set at
+ * runtime (by using ini_set()), read the PHP documentation:
+ * http://www.php.net/manual/en/ini.list.php
+ * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * runtime settings and the .htaccess file for non-runtime settings. Settings
+ * defined there should not be duplicated here so as to avoid conflict issues.
+ */
+
+/**
+ * Some distributions of Linux (most notably Debian) ship their PHP
+ * installations with garbage collection (gc) disabled. Since Drupal depends on
+ * PHP's garbage collection for clearing sessions, ensure that garbage
+ * collection occurs by using the most common settings.
+ */
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);
+
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/en/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
+
+/**
+ * Drupal automatically generates a unique session cookie name for each site
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains.
+ */
+# $cookie_domain = 'example.com';
+
+/**
+ * Variable overrides:
+ *
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
+ */
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * Enable this setting to determine the correct IP address of the remote
+ * client by examining information stored in the X-Forwarded-For headers.
+ * X-Forwarded-For headers are a standard mechanism for identifying client
+ * systems connecting through a reverse proxy server, such as Squid or
+ * Pound. Reverse proxy servers are often used to enhance the performance
+ * of heavily visited sites and may also provide other site caching,
+ * security or encryption benefits. If this Drupal installation operates
+ * behind a reverse proxy, this setting should be enabled so that correct
+ * IP address information is captured in Drupal's session management,
+ * logging, statistics and access management systems; if you are unsure
+ * about this setting, do not have a reverse proxy, or Drupal operates in
+ * a shared hosting environment, this setting should remain commented out.
+ */
+# $conf['reverse_proxy'] = TRUE;
+
+/**
+ * Set this value if your proxy server sends the client IP in a header other
+ * than X-Forwarded-For.
+ *
+ * The "X-Forwarded-For" header is a comma+space separated list of IP addresses,
+ * only the last one (the left-most) will be used.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
+
+/**
+ * reverse_proxy accepts an array of IP addresses.
+ *
+ * Each element of this array is the IP address of any of your reverse
+ * proxies. Filling this array Drupal will trust the information stored
+ * in the X-Forwarded-For headers only if Remote IP address is one of
+ * these, that is the request reaches the web server from one of your
+ * reverse proxies. Otherwise, the client could directly connect to
+ * your web server spoofing the X-Forwarded-For headers.
+ */
+# $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Page caching:
+ *
+ * By default, Drupal sends a "Vary: Cookie" HTTP header for anonymous page
+ * views. This tells a HTTP proxy that it may return a page from its local
+ * cache without contacting the web server, if the user sends the same Cookie
+ * header as the user who originally requested the cached page. Without "Vary:
+ * Cookie", authenticated users would also be served the anonymous page from
+ * the cache. If the site has mostly anonymous users except a few known
+ * editors/administrators, the Vary header can be omitted. This allows for
+ * better caching in HTTP proxies (including reverse proxies), i.e. even if
+ * clients send different cookies, they still get content served from the cache.
+ * However, authenticated users should access the site directly (i.e. not use an
+ * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
+ * getting cached pages from the proxy.
+ */
+# $conf['omit_vary_cookie'] = TRUE;
+
+/**
+ * CSS/JS aggregated file gzip compression:
+ *
+ * By default, when CSS or JS aggregation and clean URLs are enabled Drupal will
+ * store a gzip compressed (.gz) copy of the aggregated files. If this file is
+ * available then rewrite rules in the default .htaccess file will serve these
+ * files to browsers that accept gzip encoded content. This allows pages to load
+ * faster for these users and has minimal impact on server load. If you are
+ * using a webserver other than Apache httpd, or a caching reverse proxy that is
+ * configured to cache and compress these files itself you may want to uncomment
+ * one or both of the below lines, which will prevent gzip files being stored.
+ */
+# $conf['css_gzip_compression'] = FALSE;
+# $conf['js_gzip_compression'] = FALSE;
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
+
+/**
+ *
+ * IP blocking:
+ *
+ * To bypass database queries for denied IP addresses, use this setting.
+ * Drupal queries the {blocked_ips} table by default on every page request
+ * for both authenticated and anonymous users. This allows the system to
+ * block IP addresses from within the administrative interface and before any
+ * modules are loaded. However on high traffic websites you may want to avoid
+ * this query, allowing you to bypass database access altogether for anonymous
+ * users under certain caching configurations.
+ *
+ * If using this setting, you will need to add back any IP addresses which
+ * you may have blocked via the administrative interface. Each element of this
+ * array represents a blocked IP address. Uncommenting the array and leaving it
+ * empty will have the effect of disabling IP blocking on your site.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['blocked_ips'] = array(
+#   'a.b.c.d',
+# );
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface by providing either SSH or FTP
+ * credentials. This allows the site to update the new files as the user who
+ * owns all the Drupal files, instead of as the user the webserver is running
+ * as. However, some sites might wish to disable this functionality, and only
+ * update the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+
+/**
+ * Acquia database settings
+ */
+if (file_exists('/var/www/site-php')) {
+  require('/var/www/site-php/ustravesto/ustravesto-settings.inc');
+}
+
+/**
+ * Determine Acquia environment and set universal Acquia Cloud settings.
+ */
+$ah_env = 'undefined';
+if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
+  $ah_env = $_ENV['AH_SITE_ENVIRONMENT'];
+
+  $conf['cache_backends'][] = 'sites/all/modules/memcache/memcache.inc';
+  $conf['cache_default_class'] = 'MemCacheDrupal';
+  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+
+}
+
+/**
+ * Force settings based on environment
+ */
+switch ($ah_env) {
+  case 'prod':
+    break;
+
+  case 'test':
+  case 'dev':
+  default:
+    $conf['apachesolr_environments']['acquia_search_server_1']['conf']['apachesolr_read_only'] = 1;
+    break;
+}
+
+/**
+ * Fast 404 settings:
+ *
+ * Fast 404 will do two separate types of 404 checking.
+ *
+ * The first is to check for URLs which appear to be files or images. If Drupal
+ * is handling these items, then they were not found in the file system and are
+ * a 404.
+ *
+ * The second is to check whether or not the URL exists in Drupal by checking
+ * with the menu router, aliases and redirects. If the page does not exist, we
+ * will server a fast 404 error and exit.
+ */
+
+# Load the fast_404.inc file. This is needed if you wish to do extension
+# checking in settings.php.
+include_once('./sites/all/modules/fast_404/fast_404.inc');
+
+# Disallowed extensions. Any extension in here will not be served by Drupal and
+# will get a fast 404.
+# Default extension list, this is considered safe and is even in queue for
+# Drupal 8 (see: http://drupal.org/node/76824).
+$conf['fast_404_exts'] = '/[^robots]\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+
+# Allow anonymous users to hit URLs containing 'imagecache' even if the file
+# does not exist. TRUE is default behavior. If you know all imagecache
+# variations are already made set this to FALSE.
+$conf['fast_404_allow_anon_imagecache'] = TRUE;
+
+# Extension list requiring whitelisting to be activated **If you use this
+# without whitelisting enabled your site will not load!
+//$conf['fast_404_exts'] = '/\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp|php|html?|xml)$/i';
+
+# Default fast 404 error message.
+$conf['fast_404_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+# Check paths during bootstrap and see if they are legitimate.
+$conf['fast_404_path_check'] = FALSE;
+
+# If enabled, you may add extensions such as xml and php to the
+# $conf['fast_404_exts'] above. BE CAREFUL with this setting as some modules
+# use their own php files and you need to be certain they do not bootstrap
+# Drupal. If they do, you will need to whitelist them too.
+$conf['fast_404_url_whitelisting'] = FALSE;
+
+# Array of whitelisted files/urls. Used if whitelisting is set to TRUE.
+$conf['fast_404_whitelist'] = array('index.php', 'rss.xml', 'install.php', 'cron.php', 'update.php', 'xmlrpc.php');
+
+# Array of whitelisted URL fragment strings that conflict with fast_404.
+$conf['fast_404_string_whitelisting'] = array('cdn/farfuture', '/advagg_');
+
+# By default we will show a super plain 404, because usually errors like this are shown to browsers who only look at the headers.
+# However, some cases (usually when checking paths for Drupal pages) you may want to show a regular 404 error. In this case you can
+# specify a URL to another page and it will be read and displayed (it can't be redirected to because we have to give a 30x header to
+# do that. This page needs to be in your docroot.
+#$conf['fast_404_HTML_error_page'] = './my_page.html';
+
+# By default the custom 404 page is only loaded for path checking. Load it for all 404s with the below option set to TRUE
+$conf['fast_404_HTML_error_all_paths'] = FALSE;
+
+# Call the extension checking now. This will skip any logging of 404s.
+# Extension checking is safe to do from settings.php. There are many
+# examples of this on Drupal.org.
+fast_404_ext_check();
+
+# Path checking. USE AT YOUR OWN RISK (only works with MySQL).
+# Path checking at this phase is more dangerous, but faster. Normally
+# Fast_404 will check paths during Drupal boostrap via hook_boot. Checking
+# paths here is faster, but trickier as the Drupal database connections have
+# not yet been made and the module must make a separate DB connection. Under
+# most configurations this DB connection will be reused by Drupal so there
+# is no waste.
+# While this setting finds 404s faster, it adds a bit more load time to
+# regular pages, so only use if you are spending too much CPU/Memory/DB on
+# 404s and the trade-off is worth it.
+# This setting will deliver 404s with less than 2MB of RAM.
+//fast_404_path_check();
+if (isset($_ENV['AH_SITE_ENVIRONMENT'])) {
+  switch ($_ENV['AH_SITE_ENVIRONMENT']) {
+    case 'dev':
+      break;
+    case 'test':
+      break;
+    case 'prod':
+      break;
+  }
+}
+else { // must be local environment
+  $databases = array('default' => array('default' => array(
+    'driver' => 'mysql',
+    'database' => 'esto',
+    'username' => 'drupaluser',
+    'password' => '',
+    'host' => '127.0.0.1',
+    'port' => 33066 )));
+}
+
+/********************************************************************************************
+<?php
+
+/**
+ * @file
+ * Drupal site-specific configuration file.
+ *
+ * IMPORTANT NOTE:
+ * This file may have been set to read-only by the Drupal installation
+ * program. If you make changes to this file, be sure to protect it again
+ * after making your modifications. Failure to remove write permissions
+ * to this file is a security risk.
+ *
+ * The configuration file to be loaded is based upon the rules below.
+ *
+ * The configuration directory will be discovered by stripping the
+ * website's hostname from left to right and pathname from right to
+ * left. The first configuration file found will be used and anya
+ * others will be ignored. If no other configuration file is found
+ * then the default configuration file at 'sites/default' will be used.
+ *
+ * For example, for a fictitious site installed at
+ * http://www.drupal.org/mysite/test/, the 'settings.php'
+ * is searched in the following directories:
+ *
+ *  1. sites/www.drupal.org.mysite.test
+ *  2. sites/drupal.org.mysite.test
+ *  3. sites/org.mysite.test
+ *
+ *  4. sites/www.drupal.org.mysite
+ *  5. sites/drupal.org.mysite
+ *  6. sites/org.mysite
+ *
+ *  7. sites/www.drupal.org
+ *  8. sites/drupal.org
+ *  9. sites/org
+ *
+ * 10. sites/default
+ *
+ * If you are installing on a non-standard port number, prefix the
+ * hostname with that number. For example,
+ * http://www.drupal.org:8080/mysite/test/ could be loaded from
+ * sites/8080.www.drupal.org.mysite.test/.
+ */
+
+/**
+ * Database settings:
+ *
+ * The $databases array specifies the database connection or
+ * connections that Drupal may use.  Drupal is able to connect
+ * to multiple databases, including multiple types of databases,
+ * during the same request.
+ *
+ * Each database connection is specified as an array of settings,
+ * similar to the following:
+ * @code
+ * array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'port' => 3306,
+ *   'prefix' => 'myprefix_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * The "driver" property indicates what Drupal database driver the
+ * connection should use.  This is usually the same as the name of the
+ * database type, such as mysql or sqlite, but not always.  The other
+ * properties will vary depending on the driver.  For SQLite, you must
+ * specify a database file name in a directory that is writable by the
+ * webserver.  For most other drivers, you must specify a
+ * username, password, host, and database name.
+ *
+ * Some database engines support transactions.  In order to enable
+ * transaction support for a given database, set the 'transactions' key
+ * to TRUE.  To disable it, set it to FALSE.  Note that the default value
+ * varies by driver.  For MySQL, the default is FALSE since MyISAM tables
+ * do not support transactions.
+ *
+ * For each database, you may optionally specify multiple "target" databases.
+ * A target database allows Drupal to try to send certain queries to a
+ * different database if it can but fall back to the default connection if not.
+ * That is useful for master/slave replication, as Drupal may try to connect
+ * to a slave server when appropriate and if one is not available will simply
+ * fall back to the single master server.
+ *
+ * The general format for the $databases array is as follows:
+ * @code
+ * $databases['default']['default'] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['default']['slave'][] = $info_array;
+ * $databases['extra']['default'] = $info_array;
+ * @endcode
+ *
+ * In the above example, $info_array is an array of settings described above.
+ * The first line sets a "default" database that has one master database
+ * (the second level default).  The second and third lines create an array
+ * of potential slave databases.  Drupal will select one at random for a given
+ * request as needed.  The fourth line creates a new database with a name of
+ * "extra".
+ *
+ * For a single database configuration, the following is sufficient:
+ * @code
+ * $databases['default']['default'] = array(
+ *   'driver' => 'mysql',
+ *   'database' => 'databasename',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'host' => 'localhost',
+ *   'prefix' => 'main_',
+ *   'collation' => 'utf8_general_ci',
+ * );
+ * @endcode
+ *
+ * You can optionally set prefixes for some or all database table names
+ * by using the 'prefix' setting. If a prefix is specified, the table
+ * name will be prepended with its value. Be sure to use valid database
+ * characters only, usually alphanumeric and underscore. If no prefixes
+ * are desired, leave it as an empty string ''.
+ *
+ * To have all database names prefixed, set 'prefix' as a string:
+ * @code
+ *   'prefix' => 'main_',
+ * @endcode
+ * To provide prefixes for specific tables, set 'prefix' as an array.
+ * The array's keys are the table names and the values are the prefixes.
+ * The 'default' element is mandatory and holds the prefix for any tables
+ * not specified elsewhere in the array. Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main_',
+ *     'users'     => 'shared_',
+ *     'sessions'  => 'shared_',
+ *     'role'      => 'shared_',
+ *     'authmap'   => 'shared_',
+ *   ),
+ * @endcode
+ * You can also use a reference to a schema/database as a prefix. This maybe
+ * useful if your Drupal installation exists in a schema that is not the default
+ * or you want to access several databases from the same code base at the same
+ * time.
+ * Example:
+ * @code
+ *   'prefix' => array(
+ *     'default'   => 'main.',
+ *     'users'     => 'shared.',
+ *     'sessions'  => 'shared.',
+ *     'role'      => 'shared.',
+ *     'authmap'   => 'shared.',
+ *   );
+ * @endcode
+ * NOTE: MySQL and SQLite's definition of a schema is a database.
+ *
+ * Database configuration format:
+ * @code
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'mysql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'pgsql',
+ *     'database' => 'databasename',
+ *     'username' => 'username',
+ *     'password' => 'password',
+ *     'host' => 'localhost',
+ *     'prefix' => '',
+ *   );
+ *   $databases['default']['default'] = array(
+ *     'driver' => 'sqlite',
+ *     'database' => '/path/to/databasefilename',
+ *   );
+ * @endcode
+ */
+//$databases = array();
+
+/**
+ * Access control for update.php script.
+ *
+ * If you are updating your Drupal installation using the update.php script but
+ * are not logged in using either an account with the "Administer software
+ * updates" permission or the site maintenance account (the account that was
+ * created during installation), you will need to modify the access check
+ * statement below. Change the FALSE to a TRUE to disable the access check.
+ * After finishing the upgrade, be sure to open this file again and change the
+ * TRUE back to a FALSE!
+ */
+$update_free_access = FALSE;
+
+/**
+ * Salt for one-time login links and cancel links, form tokens, etc.
+ *
+ * This variable will be set to a random value by the installer. All one-time
+ * login links will be invalidated if the value is changed.  Note that this
+ * variable must have the same value on every web server.  If this variable is
+ * empty, a hash of the serialized database credentials will be used as a
+ * fallback salt.
+ *
+ * For enhanced security, you may set this variable to a value using the
+ * contents of a file outside your docroot that is never saved together
+ * with any backups of your Drupal files and database.
+ *
+ * Example:
+ *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
+ *
+ */
+$drupal_hash_salt = '';
+
+/**
+ * Base URL (optional).
+ *
+ * If Drupal is generating incorrect URLs on your site, which could
+ * be in HTML headers (links to CSS and JS files) or visible links on pages
+ * (such as in menus), uncomment the Base URL statement below (remove the
+ * leading hash sign) and fill in the absolute URL to your Drupal installation.
+ *
+ * You might also want to force users to use a given domain.
+ * See the .htaccess file for more information.
+ *
+ * Examples:
+ *   $base_url = 'http://www.example.com';
+ *   $base_url = 'http://www.example.com:8888';
+ *   $base_url = 'http://www.example.com/drupal';
+ *   $base_url = 'https://www.example.com:8888/drupal';
+ *
+ * It is not allowed to have a trailing slash; Drupal will add it
+ * for you.
+ */
+# $base_url = 'http://www.example.com';  // NO trailing slash!
+
+/**
+ * PHP settings:
+ *
+ * To see what PHP settings are possible, including whether they can be set at
+ * runtime (by using ini_set()), read the PHP documentation:
+ * http://www.php.net/manual/en/ini.list.php
+ * See drupal_initialize_variables() in includes/bootstrap.inc for required
+ * runtime settings and the .htaccess file for non-runtime settings. Settings
+ * defined there should not be duplicated here so as to avoid conflict issues.
+ */
+
+/**
+ * Some distributions of Linux (most notably Debian) ship their PHP
+ * installations with garbage collection (gc) disabled. Since Drupal depends on
+ * PHP's garbage collection for clearing sessions, ensure that garbage
+ * collection occurs by using the most common settings.
+ */
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);
+
+/**
+ * If you encounter a situation where users post a large amount of text, and
+ * the result is stripped out upon viewing but can still be edited, Drupal's
+ * output filter may not have sufficient memory to process it.  If you
+ * experience this issue, you may wish to uncomment the following two lines
+ * and increase the limits of these variables.  For more information, see
+ * http://php.net/manual/en/pcre.configuration.php.
+ */
+# ini_set('pcre.backtrack_limit', 200000);
+# ini_set('pcre.recursion_limit', 200000);
+
+/**
+ * Drupal automatically generates a unique session cookie name for each site
+ * based on its full domain name. If you have multiple domains pointing at the
+ * same Drupal site, you can either redirect them all to a single domain (see
+ * comment in .htaccess), or uncomment the line below and specify their shared
+ * base domain. Doing so assures that users remain logged in as they cross
+ * between your various domains.
+ */
+# $cookie_domain = 'example.com';
+
+/**
+ * Variable overrides:
+ *
+ * To override specific entries in the 'variable' table for this site,
+ * set them here. You usually don't need to use this feature. This is
+ * useful in a configuration file for a vhost or directory, rather than
+ * the default settings.php. Any configuration setting from the 'variable'
+ * table can be given a new value. Note that any values you provide in
+ * these variable overrides will not be modifiable from the Drupal
+ * administration interface.
+ *
+ * The following overrides are examples:
+ * - site_name: Defines the site's name.
+ * - theme_default: Defines the default theme for this site.
+ * - anonymous: Defines the human-readable name of anonymous users.
+ * Remove the leading hash signs to enable.
+ */
+# $conf['site_name'] = 'My Drupal site';
+# $conf['theme_default'] = 'garland';
+# $conf['anonymous'] = 'Visitor';
+
+/**
+ * A custom theme can be set for the offline page. This applies when the site
+ * is explicitly set to maintenance mode through the administration page or when
+ * the database is inactive due to an error. It can be set through the
+ * 'maintenance_theme' key. The template file should also be copied into the
+ * theme. It is located inside 'modules/system/maintenance-page.tpl.php'.
+ * Note: This setting does not apply to installation and update pages.
+ */
+# $conf['maintenance_theme'] = 'bartik';
+
+/**
+ * Enable this setting to determine the correct IP address of the remote
+ * client by examining information stored in the X-Forwarded-For headers.
+ * X-Forwarded-For headers are a standard mechanism for identifying client
+ * systems connecting through a reverse proxy server, such as Squid or
+ * Pound. Reverse proxy servers are often used to enhance the performance
+ * of heavily visited sites and may also provide other site caching,
+ * security or encryption benefits. If this Drupal installation operates
+ * behind a reverse proxy, this setting should be enabled so that correct
+ * IP address information is captured in Drupal's session management,
+ * logging, statistics and access management systems; if you are unsure
+ * about this setting, do not have a reverse proxy, or Drupal operates in
+ * a shared hosting environment, this setting should remain commented out.
+ */
+# $conf['reverse_proxy'] = TRUE;
+
+/**
+ * Set this value if your proxy server sends the client IP in a header other
+ * than X-Forwarded-For.
+ *
+ * The "X-Forwarded-For" header is a comma+space separated list of IP addresses,
+ * only the last one (the left-most) will be used.
+ */
+# $conf['reverse_proxy_header'] = 'HTTP_X_CLUSTER_CLIENT_IP';
+
+/**
+ * reverse_proxy accepts an array of IP addresses.
+ *
+ * Each element of this array is the IP address of any of your reverse
+ * proxies. Filling this array Drupal will trust the information stored
+ * in the X-Forwarded-For headers only if Remote IP address is one of
+ * these, that is the request reaches the web server from one of your
+ * reverse proxies. Otherwise, the client could directly connect to
+ * your web server spoofing the X-Forwarded-For headers.
+ */
+# $conf['reverse_proxy_addresses'] = array('a.b.c.d', ...);
+
+/**
+ * Page caching:
+ *
+ * By default, Drupal sends a "Vary: Cookie" HTTP header for anonymous page
+ * views. This tells a HTTP proxy that it may return a page from its local
+ * cache without contacting the web server, if the user sends the same Cookie
+ * header as the user who originally requested the cached page. Without "Vary:
+ * Cookie", authenticated users would also be served the anonymous page from
+ * the cache. If the site has mostly anonymous users except a few known
+ * editors/administrators, the Vary header can be omitted. This allows for
+ * better caching in HTTP proxies (including reverse proxies), i.e. even if
+ * clients send different cookies, they still get content served from the cache.
+ * However, authenticated users should access the site directly (i.e. not use an
+ * HTTP proxy, and bypass the reverse proxy if one is used) in order to avoid
+ * getting cached pages from the proxy.
+ */
+# $conf['omit_vary_cookie'] = TRUE;
+
+/**
+ * CSS/JS aggregated file gzip compression:
+ *
+ * By default, when CSS or JS aggregation and clean URLs are enabled Drupal will
+ * store a gzip compressed (.gz) copy of the aggregated files. If this file is
+ * available then rewrite rules in the default .htaccess file will serve these
+ * files to browsers that accept gzip encoded content. This allows pages to load
+ * faster for these users and has minimal impact on server load. If you are
+ * using a webserver other than Apache httpd, or a caching reverse proxy that is
+ * configured to cache and compress these files itself you may want to uncomment
+ * one or both of the below lines, which will prevent gzip files being stored.
+ */
+# $conf['css_gzip_compression'] = FALSE;
+# $conf['js_gzip_compression'] = FALSE;
+
+/**
+ * String overrides:
+ *
+ * To override specific strings on your site with or without enabling locale
+ * module, add an entry to this list. This functionality allows you to change
+ * a small number of your site's default English language interface strings.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['locale_custom_strings_en'][''] = array(
+#   'forum'      => 'Discussion board',
+#   '@count min' => '@count minutes',
+# );
+
+/**
+ *
+ * IP blocking:
+ *
+ * To bypass database queries for denied IP addresses, use this setting.
+ * Drupal queries the {blocked_ips} table by default on every page request
+ * for both authenticated and anonymous users. This allows the system to
+ * block IP addresses from within the administrative interface and before any
+ * modules are loaded. However on high traffic websites you may want to avoid
+ * this query, allowing you to bypass database access altogether for anonymous
+ * users under certain caching configurations.
+ *
+ * If using this setting, you will need to add back any IP addresses which
+ * you may have blocked via the administrative interface. Each element of this
+ * array represents a blocked IP address. Uncommenting the array and leaving it
+ * empty will have the effect of disabling IP blocking on your site.
+ *
+ * Remove the leading hash signs to enable.
+ */
+# $conf['blocked_ips'] = array(
+#   'a.b.c.d',
+# );
+
+/**
+ * Authorized file system operations:
+ *
+ * The Update manager module included with Drupal provides a mechanism for
+ * site administrators to securely install missing updates for the site
+ * directly through the web user interface by providing either SSH or FTP
+ * credentials. This allows the site to update the new files as the user who
+ * owns all the Drupal files, instead of as the user the webserver is running
+ * as. However, some sites might wish to disable this functionality, and only
+ * update the code directly via SSH or FTP themselves. This setting completely
+ * disables all functionality related to these authorized file operations.
+ *
+ * Remove the leading hash signs to disable.
+ */
+# $conf['allow_authorize_operations'] = FALSE;
+
+/**
+ * Acquia database settings
+ */
+if (file_exists('/var/www/site-php')) {
+  require('/var/www/site-php/ustravesto/ustravesto-settings.inc');
+}
+
+/**
+ * Determine Acquia environment and set universal Acquia Cloud settings.
+ */
+$ah_env = 'undefined';
+if (!empty($_ENV['AH_SITE_ENVIRONMENT'])) {
+  $ah_env = $_ENV['AH_SITE_ENVIRONMENT'];
+
+  $conf['cache_backends'][] = 'sites/all/modules/memcache/memcache.inc';
+  $conf['cache_default_class'] = 'MemCacheDrupal';
+  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+
+}
+
+/**
+ * Force settings based on environment
+ */
+switch ($ah_env) {
+  case 'prod':
+    break;
+
+  case 'test':
+  case 'dev':
+  default:
+    $conf['apachesolr_environments']['acquia_search_server_1']['conf']['apachesolr_read_only'] = 1;
+    break;
+}
+
+/**
+ * Fast 404 settings:
+ *
+ * Fast 404 will do two separate types of 404 checking.
+ *
+ * The first is to check for URLs which appear to be files or images. If Drupal
+ * is handling these items, then they were not found in the file system and are
+ * a 404.
+ *
+ * The second is to check whether or not the URL exists in Drupal by checking
+ * with the menu router, aliases and redirects. If the page does not exist, we
+ * will server a fast 404 error and exit.
+ */
+
+# Load the fast_404.inc file. This is needed if you wish to do extension
+# checking in settings.php.
+include_once('./sites/all/modules/fast_404/fast_404.inc');
+
+# Disallowed extensions. Any extension in here will not be served by Drupal and
+# will get a fast 404.
+# Default extension list, this is considered safe and is even in queue for
+# Drupal 8 (see: http://drupal.org/node/76824).
+$conf['fast_404_exts'] = '/[^robots]\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+
+# Allow anonymous users to hit URLs containing 'imagecache' even if the file
+# does not exist. TRUE is default behavior. If you know all imagecache
+# variations are already made set this to FALSE.
+$conf['fast_404_allow_anon_imagecache'] = TRUE;
+
+# Extension list requiring whitelisting to be activated **If you use this
+# without whitelisting enabled your site will not load!
+//$conf['fast_404_exts'] = '/\.(txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp|php|html?|xml)$/i';
+
+# Default fast 404 error message.
+$conf['fast_404_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+# Check paths during bootstrap and see if they are legitimate.
+$conf['fast_404_path_check'] = FALSE;
+
+# If enabled, you may add extensions such as xml and php to the
+# $conf['fast_404_exts'] above. BE CAREFUL with this setting as some modules
+# use their own php files and you need to be certain they do not bootstrap
+# Drupal. If they do, you will need to whitelist them too.
+$conf['fast_404_url_whitelisting'] = FALSE;
+
+# Array of whitelisted files/urls. Used if whitelisting is set to TRUE.
+$conf['fast_404_whitelist'] = array('index.php', 'rss.xml', 'install.php', 'cron.php', 'update.php', 'xmlrpc.php');
+
+# Array of whitelisted URL fragment strings that conflict with fast_404.
+$conf['fast_404_string_whitelisting'] = array('cdn/farfuture', '/advagg_');
+
+# By default we will show a super plain 404, because usually errors like this are shown to browsers who only look at the headers.
+# However, some cases (usually when checking paths for Drupal pages) you may want to show a regular 404 error. In this case you can
+# specify a URL to another page and it will be read and displayed (it can't be redirected to because we have to give a 30x header to
+# do that. This page needs to be in your docroot.
+#$conf['fast_404_HTML_error_page'] = './my_page.html';
+
+# By default the custom 404 page is only loaded for path checking. Load it for all 404s with the below option set to TRUE
+$conf['fast_404_HTML_error_all_paths'] = FALSE;
+
+# Call the extension checking now. This will skip any logging of 404s.
+# Extension checking is safe to do from settings.php. There are many
+# examples of this on Drupal.org.
+fast_404_ext_check();
+
+# Path checking. USE AT YOUR OWN RISK (only works with MySQL).
+# Path checking at this phase is more dangerous, but faster. Normally
+# Fast_404 will check paths during Drupal boostrap via hook_boot. Checking
+# paths here is faster, but trickier as the Drupal database connections have
+# not yet been made and the module must make a separate DB connection. Under
+# most configurations this DB connection will be reused by Drupal so there
+# is no waste.
+# While this setting finds 404s faster, it adds a bit more load time to
+# regular pages, so only use if you are spending too much CPU/Memory/DB on
+# 404s and the trade-off is worth it.
+# This setting will deliver 404s with less than 2MB of RAM.
+//fast_404_path_check();
+
+///////////////////////////////////////////////////////////////////////
+//       Please don't edit anything between <@@ADCP_CONF@@> tags     //
+// This section is autogenerated by Acquia Dev Desktop Control Panel //
+///////////////////////////////////////////////////////////////////////
+//<@@ADCP_CONF@@>
+$base_url = 'http://nick.esto.ustravel.org:8082';
+
+//D6 DB config
+$db_url = 'mysqli://drupaluser@127.0.0.1:33066/esto';
+
+//D7 DB config
+$databases = array('default' => array('default' => array(
+    'driver' => 'mysql',
+    'database' => 'esto',
+    'username' => 'drupaluser',
+    'password' => '',
+    'host' => '127.0.0.1',
+    'port' => 33066 )));
+//</@@ADCP_CONF@@>
+
+/********************************************************************************************
+/********************************************************************************************
+/********************************************************************************************
